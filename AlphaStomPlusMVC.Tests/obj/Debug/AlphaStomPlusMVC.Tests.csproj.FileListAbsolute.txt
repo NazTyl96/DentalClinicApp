@@ -1,0 +1,110 @@
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.Tests.dll.config
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.Tests.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.Tests.pdb
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Helpers.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Mvc.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Razor.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Optimization.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\WebGrease.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Antlr3.Runtime.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.pdb
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.dll.config
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Helpers.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Mvc.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Razor.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Optimization.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\Antlr3.Runtime.pdb
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.Helpers.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.Mvc.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.Razor.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.WebPages.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.Optimization.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.csprojAssemblyReference.cache
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.csproj.CoreCompileInputs.cache
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.csproj.CopyComplete
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.pdb
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\EntityFramework.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\EntityFramework.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\bin\Debug\ru\EntityFramework.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.csproj.AssemblyReference.cache
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.csproj.AssemblyReference.cache
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.csproj.CoreCompileInputs.cache
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.Tests.dll.config
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.Tests.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.Tests.pdb
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Helpers.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Mvc.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Razor.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Optimization.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\EntityFramework.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Spire.Doc.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\WebGrease.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Spire.License.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Spire.Pdf.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Antlr3.Runtime.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.mshtml.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.pdb
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\AlphaStomPlusMVC.dll.config
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Helpers.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Mvc.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Razor.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\System.Web.Optimization.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\EntityFramework.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Spire.Doc.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Spire.License.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Spire.Pdf.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\Antlr3.Runtime.pdb
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.Helpers.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.Mvc.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.Razor.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.WebPages.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\System.Web.Optimization.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\bin\Debug\ru\EntityFramework.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.csproj.CopyComplete
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC.Tests\obj\Debug\AlphaStomPlusMVC.Tests.pdb

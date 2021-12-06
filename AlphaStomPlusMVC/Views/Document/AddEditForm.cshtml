@@ -1,0 +1,40 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Document;
+@model AddEditViewModel
+
+<div class="validation-block" id="add-edit-validation">
+    <ul></ul>
+</div>
+<form id="document-info-form">
+    <div class="simple-column">
+        <input type="text" name="Id" id="doc-id" hidden value="@Model.Document.Id" />
+        <input type="text" name="Status" id="doc-status" hidden value="@Model.Document.Status" />
+
+        <label>Пациент</label>
+        <select class="form-select" id="patient-select" name="PatientId">
+            <option></option>
+            @foreach (var item in Model.PatientSelect)
+            {
+                <option value="@item.Id" @(item.Id == Model.Document.PatientId ? "selected" : "")>@item.FullName</option>
+            }
+        </select>
+
+        <label>Тип документа</label>
+        <select class="form-select" id="type-select" name="TypeId">
+            @foreach (var item in Model.DocTypeSelect)
+            {
+                <option value="@item.Id" @(item.Id == Model.Document.TypeId ? "selected" : "")>@item.TypeName</option>
+            }
+        </select>
+
+        <label>Документ</label>
+        @if (Model.Document.Id > 0)
+        {
+            <span id="doc-span" data-doc-id="@Model.Document.Id">@Model.Document.Name</span>
+        }
+        else
+        {
+            <input class="form-control" id="document-input" type="file" value="" />
+        }
+
+    </div>
+</form>

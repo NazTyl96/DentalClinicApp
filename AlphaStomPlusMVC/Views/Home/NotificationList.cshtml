@@ -1,0 +1,120 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Home;
+@model NotificationsViewModel
+@{ 
+    int tomorrowAppsCounter = 1;
+    int halfYearAppsCounter = 1;
+}
+
+<div id="view-notifications-form">
+
+    <div class="notifications-view__appointments">
+        @if (Model.DayBeforeAppointments.Any() || Model.HalfYearAppointments.Any()) 
+        { 
+
+            if (Model.DayBeforeAppointments.Any())
+            {
+                <h4>Записи следующего рабочего дня (@Model.NextWorkDay.ToShortDateString()):</h4>
+
+                <div class="table-container" id="appointments-table-container">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Пациент</th>
+                                <th>Телефон пациента</th>
+                                <th>Время</th>
+                                <th>Врач</th>
+                                <th>Услуга</th>
+                                <th>Комментарий</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var app in Model.DayBeforeAppointments)
+                            {
+                                <tr data-notification-id="@app.NotificationId">
+                                    <td>@(tomorrowAppsCounter++)</td>
+                                    <td>@app.PatientName</td>
+                                    <td>@app.Phone</td>
+                                    <td>@app.DateTime.ToShortTimeString()</td>
+                                    <td>@app.DoctorName</td>
+                                    <td>@app.ServiceName</td>
+                                    <td>@app.Comment</td>
+                                    <td><button type="button" class="btn btn-sm btn-outline-primary accept-notification"><i class="bi bi-eye"></i> Отметить как просмотренное</button></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+            if (Model.HalfYearAppointments.Any())
+            {
+                <h4>Напоминания о контрольном осмотре:</h4>
+
+                <div class="table-container" id="appointments-table-container">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Пациент</th>
+                                <th>Телефон пациента</th>
+                                <th>Последний приём</th>
+                                <th>Врач</th>
+                                <th>Услуга</th>
+                                <th>Комментарий</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var app in Model.HalfYearAppointments)
+                            {
+                                <tr data-notification-id="@app.NotificationId">
+                                    <td>@(halfYearAppsCounter++)</td>
+                                    <td>@app.PatientName</td>
+                                    <td>@app.Phone</td>
+                                    <td>@app.DateTime.ToShortDateString()</td>
+                                    <td>@app.DoctorName</td>
+                                    <td>@app.ServiceName</td>
+                                    <td>@app.Comment</td>
+                                    <td><button type="button" class="btn btn-sm btn-outline-primary accept-notification"><i class="bi bi-eye"></i> Отметить как просмотренное</button></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        }
+        else
+        {
+            <h4>Новые уведомления не найдены</h4>
+        }
+    </div>
+</div>
+
+<script>
+    $(function () {
+        let acceptButtons = document.getElementsByClassName('accept-notification');
+        Array.from(acceptButtons).forEach(btn => {
+            btn.onclick = function () {
+                let curTr = btn.closest('tr');
+                let curNotificationId = curTr.dataset.notificationId;
+
+                $.ajax({
+                    url: `@Url.Action("AcceptNotification")?id=${curNotificationId}`,
+                    method: 'POST',
+                    success: function (result) {
+                        if (result.success) {
+                            curTr.style.display = 'none';
+                            ohSnap("Уведомление больше не будет отображаться", { 'color': 'green', 'duration': '3000' });
+
+                            if (typeof GetNotificationsCount == "function") {
+                                GetNotificationsCount();
+                            }
+                        }
+                    }
+                });
+            }
+        })
+    });
+</script>

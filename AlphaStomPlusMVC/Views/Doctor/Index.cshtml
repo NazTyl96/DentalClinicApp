@@ -1,0 +1,422 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Doctor;
+@model IndexViewModel
+
+<style>
+    sup {
+        color: red;
+    }
+
+    #apply-filters,
+    #clear-filters {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+
+    #doctor-table-container {
+        max-height: 60vh;
+    }
+
+        #doctor-table-container table tbody tr:hover {
+            cursor: pointer;
+        }
+
+    #buttons {
+        margin: 20px 0px;
+    }
+
+    #appointment-block {
+        flex-wrap: nowrap;
+        margin-bottom: 10px;
+    }
+
+    #partial-insert-view {
+        background-color: lavender;
+    }
+
+    #view-form {
+        display: grid;
+        grid-template-areas: "info buttons"
+                             "appointments appointments";
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto auto;
+        gap: 30px 10px;
+    }
+
+    #doctor-info {
+        grid-area: info;
+        background-color: white;
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+    #doctor-buttons {
+        grid-area: buttons;
+        justify-content: flex-start;
+    }
+
+    #doctor-buttons button.btn {
+        align-self: stretch;
+    }
+
+    #doctor-appointments {
+        grid-area: appointments;
+        background-color: white;
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+    #appointments-table-container {
+        height: 40vh;
+    }
+</style>
+
+<h2>Врачи клиники</h2>
+
+<div class="simple-row" id="buttons">
+    @if (Model.Status == 1)
+    {
+        <button type="button" class="btn btn-primary simple-row__item" id="add-patient" onclick="AddDoctor()"><i class="bi bi-journal-plus"></i> Добавить врача</button>
+        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="ChangeStatus()"><i class="bi bi-folder-fill"></i> Перейти в архив</button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="ChangeStatus()"><i class="bi bi-person-rolodex"></i> Перейти к врачам в работе</button>
+    }
+</div>
+
+<div class="filter-row">
+    <div class="filter-row__column-unit filter-row__column-unit_size_large">
+        <label>ФИО врача</label>
+        <select id="doctor-filter" multiple>
+            @foreach (var item in Model.DoctorsFilter)
+            {
+                <option value="@item.Id">@item.FullName</option>
+            }
+        </select>
+    </div>
+
+    <div class="simple-row">
+        <button type="button" class="btn btn-primary simple-row__item" id="apply-filters" onclick="LoadDoctorList()"><i class="bi bi-funnel-fill"></i> Применить фильтры</button>
+        <button type="button" class="btn btn-secondary simple-row__item" id="clear-filters" onclick="ClearFilters()"><i class="bi bi-funnel"></i> Очистить фильтры</button>
+    </div>
+</div>
+
+<div id="table-div"></div>
+
+@*модальное окно подтверждения*@
+<div class="modal fade" id="delete-confirm-modal" tabindex="-1" aria-labelledby="delete-doctor-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-doctor-label">Подтвердите действие</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="delete-confirm-modal__question"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success delete-confirm" id="delete-doctor" onclick="">Да</button>
+                <button type="button" class="btn btn-success delete-confirm" id="restore-doctor" onclick="">Да</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+@*модальноe окно добавления/редактирования врача*@
+<div class="modal fade" id="add-edit-modal" tabindex="-1" aria-labelledby="add-doctor-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-doctor-modal-label"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="partial-insert"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-success" id="save-doctor" onclick="SaveDoctor()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+@*модальноe окно просмотра врача*@
+<div class="modal fade" id="view-modal" tabindex="-1" aria-labelledby="view-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="view-modal-label">Просмотр информации о враче</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body doctor-view" id="partial-insert-view"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+<script>
+    document.querySelector('.section-list__section#doctor').classList.add('section-list__section_active');
+
+    let addEditModal;
+    let viewModal;
+    let deleteConfirmModal;
+
+    $(function () {
+        CheckForNewNotifications();
+
+        $('#doctor-filter').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Выберите ФИО'
+        });
+
+        document.getElementById('clear-filters').onclick = function () {
+
+            $('#doctor-filter').val('');
+            $('#doctor-filter').trigger('change');
+
+            LoadDoctorList();
+        }
+
+        LoadDoctorList();
+    });
+
+    //функция для дочернего окна
+    function ToggleViewModal() {
+        viewModal.toggle();
+    };
+
+    function ChangeStatus() {
+
+        let curStatus = '@Model.Status';
+
+        let newStatus;
+        if (curStatus === '1') {
+            newStatus = '0';
+        }
+        else {
+            newStatus = '1';
+        }
+
+        document.location.assign(`@Url.Action("Index")?status=${newStatus}`)
+    }
+
+    function LoadDoctorList() {
+        let doctorFilter = $('#doctor-filter').val() || '';
+        $.ajax({
+            url: `@Url.Action("LoadDoctorsList")?doctorIds=${doctorFilter}&status=@Model.Status`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#table-div").empty().html("<h4>Загрузка данных...</h4>");
+            },
+            success: function (result) {
+                $("#table-div").html(result);
+                AfterLoadTable();
+            }
+        });
+    };
+
+    function AfterLoadTable() {
+
+        $("#doctors-list-table").tablesorter({
+            cssIcon: 'tablesorter-icon',
+            headerTemplate: '{icon}{content}',
+            cssChildRow: "tablesorter-childRow"
+        });
+
+        let doctorTds = Array.from(document.querySelectorAll('table tbody tr td:nth-child(-n + 3)'));
+        doctorTds.forEach((td) => {
+            td.onclick = function () {
+                ViewDoctor(td.closest('tr').dataset.doctorId);
+            }
+        })
+
+        let editButtons = Array.from(document.getElementsByClassName('edit-doctor'));
+        editButtons.forEach((btn) => {
+            btn.onclick = function () {
+                EditDoctor(btn.closest('tr').dataset.doctorId);
+            }
+        })
+
+        let deleteRestoreButtons = Array.from(document.getElementsByClassName('delete-restore-btn'));
+        deleteRestoreButtons.forEach((btn) => {
+            btn.onclick = function () {
+                deleteConfirmModal = new bootstrap.Modal(document.getElementById('delete-confirm-modal'), {
+                    keyboard: false
+                });
+
+                let doctorId = btn.closest('tr').dataset.doctorId;
+                let question = document.getElementById('delete-confirm-modal__question');
+
+                if (btn.classList.contains('delete-doctor')) {
+                    question.innerHTML = `<span id="delete-confirm-modal__warning">При переведении врача в архив все его предстоящие приёмы будут отменены</span>
+                                         <br />
+                                         <span id="delete-confirm-modal__question">Вы действительно хотите перевести данного врача в архив?</span>`;
+                    let deleteDoctorBtn = document.getElementById('delete-doctor');
+                    document.getElementById('restore-doctor').style.display = 'none';
+                    deleteDoctorBtn.style.display = 'block';
+                    deleteDoctorBtn.dataset.doctorId = doctorId;
+                }
+                else {
+                    question.textContent = 'Вы действительно хотите вернуть данного врача в работу?';
+                    let restoreDoctorBtn = document.getElementById('restore-doctor');
+                    document.getElementById('delete-doctor').style.display = 'none';
+                    restoreDoctorBtn.style.display = 'block';
+                    restoreDoctorBtn.dataset.doctorId = doctorId;
+                }
+
+                deleteConfirmModal.show();
+            }
+        })
+    }
+
+    function AddDoctor() {
+        addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
+            keyboard: false
+        });
+
+        document.getElementById('save-doctor').style.display = 'block';
+        document.getElementById('add-doctor-modal-label').textContent = 'Добавление информации о враче';
+        $.ajax({
+            url: `@Url.Action("AddDoctor")`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert").empty();
+            },
+            success: function (result) {
+                $("#partial-insert").html(result);
+                let modal = document.getElementById('add-edit-modal');
+                let fullNameInput = document.getElementById('full-name');
+
+                modal.addEventListener('shown.bs.modal', function () {
+                    fullNameInput.focus()
+                })
+
+                addEditModal.show();
+            }
+        });
+    };
+
+    function ViewDoctor(doctorId) {
+        viewModal = new bootstrap.Modal(document.getElementById('view-modal'), {
+            keyboard: false
+        });
+
+        $.ajax({
+            url: `@Url.Action("ViewDoctor")?id=${doctorId}`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert-view").empty();
+            },
+            success: function (result) {
+                $("#partial-insert-view").html(result);
+
+                let addAppButton = document.getElementById('add-appointment');
+                addAppButton.onclick = function () {
+                    let doctorId = document.getElementById('doctor-id').value;
+                    let appWin = window.open(`@Url.Action("Index", "Appointment")`, '_blank');
+                    appWin.onload = function () {
+                        appWin.AddAppointment('', 0, doctorId);
+                    };
+
+                    //appWin.onbeforeunload = function () {
+                    //    viewModal.toggle();
+                    //    ViewDoctor(doctorId);
+                    //    ohSnap("Запись на приём успешно создана", { 'color': 'green', 'duration': '3000' });
+                    //}
+                }
+
+                viewModal.show();
+            }
+        });
+    };
+
+    function EditDoctor(doctorId) {
+        addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
+            keyboard: false
+        });
+
+        document.getElementById('save-doctor').style.display = 'block';
+        document.getElementById('add-doctor-modal-label').textContent = 'Редактирование информации о враче';
+        $.ajax({
+            url: `@Url.Action("EditDoctor")?id=${doctorId}`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert").empty();
+            },
+            success: function (result) {
+                $("#partial-insert").html(result);
+
+                addEditModal.show();
+            }
+        });
+    };
+
+    function SaveDoctor() {
+        let doctorForm = $('#doctor-form').serialize();
+        
+        $.ajax({
+            url: `@Url.Action("SaveDoctor")`,
+            data: doctorForm,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    addEditModal.toggle();
+                    LoadDoctorList();
+                    ohSnap("Изменения успешно сохранены", { 'color': 'green', 'duration': '3000' });
+                    if (result.data > 0) {
+                        ViewDoctor(result.data)
+                    }
+                }
+                else {
+                    let validBlock = document.getElementById('add-edit-validation');
+                    validBlock.querySelector('ul').innerHTML = '';
+                    (result.data).forEach(function (item) {
+                        validBlock.querySelector('ul').innerHTML += '<li>' + item + '</li>';
+                    })
+
+                    $('#add-edit-modal').animate({ scrollTop: 0 }, 'slow');
+                }
+            }
+        });
+    };
+
+    document.getElementById('delete-doctor').onclick = function () {
+        let doctorId = this.dataset.doctorId;
+        $.ajax({
+            url: `@Url.Action("DeleteDoctor")?doctorId=${doctorId}`,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    deleteConfirmModal.toggle();
+                    LoadDoctorList();
+                    ohSnap("Врач переведён в архив", { 'color': 'green', 'duration': '3000' });
+                }
+            }
+        });
+    }
+
+    document.getElementById('restore-doctor').onclick = function () {
+        let doctorId = this.dataset.doctorId;
+        $.ajax({
+            url: `@Url.Action("RestoreDoctor")?doctorId=${doctorId}`,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    deleteConfirmModal.toggle();
+                    LoadDoctorList();
+                    ohSnap("Врач был возвращён в работу", { 'color': 'green', 'duration': '3000' });
+                }
+            }
+        });
+    }
+
+</script>
+

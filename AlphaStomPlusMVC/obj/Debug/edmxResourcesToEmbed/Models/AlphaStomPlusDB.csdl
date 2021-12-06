@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AlphaStomPlusModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="AlphaStomPlusEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Appointment" EntityType="AlphaStomPlusModel.Appointment" />
+    <EntitySet Name="Doctor" EntityType="AlphaStomPlusModel.Doctor" />
+    <EntitySet Name="DocType" EntityType="AlphaStomPlusModel.DocType" />
+    <EntitySet Name="Document" EntityType="AlphaStomPlusModel.Document" />
+    <EntitySet Name="Notification" EntityType="AlphaStomPlusModel.Notification" />
+    <EntitySet Name="Patient" EntityType="AlphaStomPlusModel.Patient" />
+    <EntitySet Name="Service" EntityType="AlphaStomPlusModel.Service" />
+    <AssociationSet Name="FK__Appointme__Docto__2D27B809" Association="AlphaStomPlusModel.FK__Appointme__Docto__2D27B809">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Appointment" EntitySet="Appointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Appointme__Patie__2C3393D0" Association="AlphaStomPlusModel.FK__Appointme__Patie__2C3393D0">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Appointment" EntitySet="Appointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Appointme__Servi__2E1BDC42" Association="AlphaStomPlusModel.FK__Appointme__Servi__2E1BDC42">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="Appointment" EntitySet="Appointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Notificat__Appoi__619B8048" Association="AlphaStomPlusModel.FK__Notificat__Appoi__619B8048">
+      <End Role="Appointment" EntitySet="Appointment" />
+      <End Role="Notification" EntitySet="Notification" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Document__TypeId__33D4B598" Association="AlphaStomPlusModel.FK__Document__TypeId__33D4B598">
+      <End Role="DocType" EntitySet="DocType" />
+      <End Role="Document" EntitySet="Document" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Document__Patien__32E0915F" Association="AlphaStomPlusModel.FK__Document__Patien__32E0915F">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Document" EntitySet="Document" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Appointment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <Property Name="DoctorId" Type="Int32" Nullable="false" />
+    <Property Name="ServiceId" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Doctor" Relationship="AlphaStomPlusModel.FK__Appointme__Docto__2D27B809" FromRole="Appointment" ToRole="Doctor" />
+    <NavigationProperty Name="Patient" Relationship="AlphaStomPlusModel.FK__Appointme__Patie__2C3393D0" FromRole="Appointment" ToRole="Patient" />
+    <NavigationProperty Name="Service" Relationship="AlphaStomPlusModel.FK__Appointme__Servi__2E1BDC42" FromRole="Appointment" ToRole="Service" />
+    <NavigationProperty Name="Notification" Relationship="AlphaStomPlusModel.FK__Notificat__Appoi__619B8048" FromRole="Appointment" ToRole="Notification" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Position" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Appointment" Relationship="AlphaStomPlusModel.FK__Appointme__Docto__2D27B809" FromRole="Doctor" ToRole="Appointment" />
+  </EntityType>
+  <EntityType Name="DocType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Document" Relationship="AlphaStomPlusModel.FK__Document__TypeId__33D4B598" FromRole="DocType" ToRole="Document" />
+  </EntityType>
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientId" Type="Int32" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TypeId" Type="Int32" />
+    <Property Name="Content" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DocType" Relationship="AlphaStomPlusModel.FK__Document__TypeId__33D4B598" FromRole="Document" ToRole="DocType" />
+    <NavigationProperty Name="Patient" Relationship="AlphaStomPlusModel.FK__Document__Patien__32E0915F" FromRole="Document" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="Notification">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AppointmentId" Type="Int32" Nullable="false" />
+    <Property Name="IsShown" Type="Boolean" Nullable="false" />
+    <Property Name="IsAccepted" Type="Boolean" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="DateOfShow" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Appointment" Relationship="AlphaStomPlusModel.FK__Notificat__Appoi__619B8048" FromRole="Notification" ToRole="Appointment" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CardNumber" Type="Int32" />
+    <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Sex" Type="Int32" Nullable="false" />
+    <Property Name="PassportSerial" Type="Int32" />
+    <Property Name="PassportNumber" Type="Int32" />
+    <Property Name="HasXray" Type="Boolean" Nullable="false" />
+    <Property Name="HasInsurance" Type="Boolean" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Appointment" Relationship="AlphaStomPlusModel.FK__Appointme__Patie__2C3393D0" FromRole="Patient" ToRole="Appointment" />
+    <NavigationProperty Name="Document" Relationship="AlphaStomPlusModel.FK__Document__Patien__32E0915F" FromRole="Patient" ToRole="Document" />
+    <Property Name="XrayInClinic" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Cost" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Appointment" Relationship="AlphaStomPlusModel.FK__Appointme__Servi__2E1BDC42" FromRole="Service" ToRole="Appointment" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Appointme__Docto__2D27B809">
+    <End Type="AlphaStomPlusModel.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="AlphaStomPlusModel.Appointment" Role="Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Appointme__Patie__2C3393D0">
+    <End Type="AlphaStomPlusModel.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="AlphaStomPlusModel.Appointment" Role="Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Appointme__Servi__2E1BDC42">
+    <End Type="AlphaStomPlusModel.Service" Role="Service" Multiplicity="1" />
+    <End Type="AlphaStomPlusModel.Appointment" Role="Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="ServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Notificat__Appoi__619B8048">
+    <End Type="AlphaStomPlusModel.Appointment" Role="Appointment" Multiplicity="1" />
+    <End Type="AlphaStomPlusModel.Notification" Role="Notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Appointment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Notification">
+        <PropertyRef Name="AppointmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Document__TypeId__33D4B598">
+    <End Type="AlphaStomPlusModel.DocType" Role="DocType" Multiplicity="0..1" />
+    <End Type="AlphaStomPlusModel.Document" Role="Document" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DocType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Document">
+        <PropertyRef Name="TypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Document__Patien__32E0915F">
+    <End Type="AlphaStomPlusModel.Patient" Role="Patient" Multiplicity="0..1" />
+    <End Type="AlphaStomPlusModel.Document" Role="Document" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Document">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

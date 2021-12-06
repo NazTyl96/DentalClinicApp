@@ -1,0 +1,51 @@
+    /* ALERTS */
+    /* inspired by Twitter Bootstrap */
+
+	#ohsnap {
+	    /*bottom: 0px;*/
+	    /*margin-left: 5px;*/
+	    position: fixed;
+	    top: 1vh;
+	    right: 1vw;
+        border-radius: 10px;  
+
+	    /*margin-right: 21px;
+	        margin-top: 1px;*/
+	    /*right: 5px;*/
+	    z-index: 2000;
+	}
+
+
+    .snapalert{
+        padding: 15px;
+        margin-top: 1px;
+        border: 1px solid #eed3d7;
+        border-radius: 4px;  
+        min-width : 200px;
+        text-align:center;
+        /*margin-right: 21px;*/
+        clear: right;
+        float: right;
+        /*background-color: white;*/
+    }
+
+    .snapalert-red {
+      color: white;
+      background-color: #DA4453;
+    }
+    .snapalert-green {
+      color: white;
+      background-color: #37BC9B;
+    }
+    .snapalert-blue {
+      color: white;
+      background-color: #4A89DC;
+    }
+    .snapalert-yellow {
+      color: white;
+      background-color: #F6BB42;
+    }
+    .snapalert-orange {
+      color:white;
+      background-color: #E9573F;
+    }

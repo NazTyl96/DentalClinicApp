@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaStomPlusMVC", "AlphaStomPlusMVC\AlphaStomPlusMVC.csproj", "{5D76C06D-E0D7-4F3B-86C4-8F3FA67F888B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaStomPlusMVC.Tests", "AlphaStomPlusMVC.Tests\AlphaStomPlusMVC.Tests.csproj", "{66A27880-6080-4506-87BB-83289CF30766}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D76C06D-E0D7-4F3B-86C4-8F3FA67F888B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D76C06D-E0D7-4F3B-86C4-8F3FA67F888B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D76C06D-E0D7-4F3B-86C4-8F3FA67F888B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D76C06D-E0D7-4F3B-86C4-8F3FA67F888B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66A27880-6080-4506-87BB-83289CF30766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A27880-6080-4506-87BB-83289CF30766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66A27880-6080-4506-87BB-83289CF30766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66A27880-6080-4506-87BB-83289CF30766}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B56A3521-93A0-4DEB-84E8-DD5A6072CD84}
+	EndGlobalSection
+EndGlobal

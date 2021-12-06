@@ -1,0 +1,554 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Document;
+@model IndexViewModel
+
+<style>
+    sup {
+        color: red;
+    }
+
+    #buttons {
+        margin: 20px 0px;
+    }
+
+    #apply-filters,
+    #clear-filters {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+
+    #doc-table-container {
+        max-height: 60vh;
+    }
+
+    #type-table-container {
+        margin-top: 10px;
+        max-height: 80vh;
+    }
+
+    .doc-tr td:nth-child(-n + 4):hover {
+        cursor: pointer;
+    }
+
+    #doc-span {
+        color: dodgerblue;
+        text-decoration: underline;
+    }
+
+    #doc-span:hover {
+        cursor: pointer;
+        color: deepskyblue;
+        text-decoration: none;
+    }
+</style>
+
+<h2>Документы пациентов</h2>
+
+<div class="simple-row" id="buttons">
+    @if (Model.Status == 1)
+    {
+        <button type="button" class="btn btn-primary simple-row__item" id="add-doc" onclick="AddDocument()"><i class="bi bi-file-earmark-plus-fill"></i> Добавить документ</button>
+        <button type="button" class="btn btn-primary simple-row__item" id="add-doc" onclick="AddEditDocType()"><i class="bi bi-pencil-square"></i> Добавить/изменить типы документов</button>
+        @*<button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="ChangeStatus()"><i class="bi bi-folder-fill"></i> Перейти в архив</button>*@
+    }
+    else
+    {
+        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="ChangeStatus()"><i class="bi bi-person-rolodex"></i> Перейти к услугам в работе</button>
+    }
+</div>
+
+<div class="filter-row">
+    <div class="filter-row__column-unit filter-row__column-unit_size_large">
+        <label>Название документа</label>
+        <select id="doc-filter" multiple>
+            @foreach (var item in Model.DocumentFilter)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="filter-row__column-unit filter-row__column-unit_size_large">
+        <label>ФИО пациента</label>
+        <select id="patient-name-filter" multiple>
+            <option value="0">Без пациента</option>
+            @foreach (var item in Model.PatientFilter)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+    </div>
+
+    <div class="filter-row__column-unit filter-row__column-unit_size_large">
+        <label>Тип документа</label>
+        <select id="type-filter" multiple>
+            @foreach (var item in Model.DocTypeFilter)
+            {
+                <option value="@item.Id">@item.TypeName</option>
+            }
+        </select>
+    </div>
+
+    <div class="simple-row">
+        <button type="button" class="btn btn-primary simple-row__item" id="apply-filters" onclick="LoadDocsList()"><i class="bi bi-funnel-fill"></i> Применить фильтры</button>
+        <button type="button" class="btn btn-secondary simple-row__item" id="clear-filters" onclick="ClearFilters()"><i class="bi bi-funnel"></i> Очистить фильтры</button>
+    </div>
+</div>
+
+<div id="table-div"></div>
+
+@*модальное окно подтверждения*@
+<div class="modal fade" id="delete-confirm-modal" tabindex="-1" aria-labelledby="delete-doc-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-doc-label">Подтвердите действие</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="delete-confirm-modal__warning">Удаленные документы вернуть в работу невозможно</span>
+                <br />
+                <span id="delete-confirm-modal__question">Вы действительно хотите удалить данный документ?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success delete-confirm" id="delete-doc" onclick="">Да</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+@*модальноe окно добавления/редактирования типов документов*@
+<div class="modal fade" id="add-edit-type-modal" tabindex="-1" aria-labelledby="add-type-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-type-modal-label">Работа с типами документов</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="partial-insert-add-type"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+@*модальноe окно добавления/редактирования документа*@
+<div class="modal fade" id="add-edit-modal" tabindex="-1" aria-labelledby="add-doc-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-doc-modal-label"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="partial-insert"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-success" id="save-doc" onclick="SaveDocument()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+<script>
+    document.querySelector('.section-list__section#document').classList.add('section-list__section_active');
+
+    let addEditModal;
+    let addEditTypeModal;
+    let deleteConfirmModal;
+
+    $(function () {
+        CheckForNewNotifications();
+
+        $('#doc-filter').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Выберите название'
+        });
+
+        $('#patient-name-filter').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Выберите ФИО'
+        });
+
+        $('#type-filter').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Выберите тип'
+        });
+
+        document.getElementById('clear-filters').onclick = function () {
+
+            $('#doc-filter').val('');
+            $('#doc-filter').trigger('change');
+
+            $('#patient-name-filter').val('');
+            $('#patient-name-filter').trigger('change');
+
+            $('#type-filter').val('');
+            $('#type-filter').trigger('change');
+
+            LoadDocsList();
+        }
+
+        LoadDocsList();
+    });
+
+    @*function ChangeStatus() {
+
+        let curStatus = '@Model.Status';
+
+        let newStatus;
+        if (curStatus === '1') {
+            newStatus = '0';
+        }
+        else {
+            newStatus = '1';
+        }
+
+        document.location.assign(`@Url.Action("Index")?status=${newStatus}`)
+    }*@
+
+    function LoadDocsList() {
+        let docFilter = $('#doc-filter').val() || '';
+        let nameFilter = $('#patient-name-filter').val() || '';
+        let typeFilter = $('#type-filter').val() || '';
+        $.ajax({
+            url: `@Url.Action("LoadDocumentsList")?docIds=${docFilter}&patientNames=${nameFilter}&docTypeIds=${typeFilter}`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#table-div").empty().html("<h4>Загрузка данных...</h4>");
+            },
+            success: function (result) {
+                $("#table-div").html(result);
+                AfterLoadTable();
+            }
+        });
+    };
+
+    function AfterLoadTable() {
+
+        $("#documents-list-table").tablesorter({
+            cssIcon: 'tablesorter-icon',
+            headerTemplate: '{icon}{content}',
+            cssChildRow: "tablesorter-childRow"
+        });
+
+        let editButtons = Array.from(document.getElementsByClassName('edit-doc'));
+        editButtons.forEach((btn) => {
+            btn.onclick = function () {
+                EditDocument(btn.closest('tr').dataset.docId);
+            }
+        })
+
+        let deleteButtons = Array.from(document.getElementsByClassName('delete-btn'));
+        deleteButtons.forEach((btn) => {
+            btn.onclick = function () {
+                deleteConfirmModal = new bootstrap.Modal(document.getElementById('delete-confirm-modal'), {
+                    keyboard: false
+                });
+
+                let docId = btn.closest('tr').dataset.docId;
+                let deleteDocBtn = document.getElementById('delete-doc');
+                deleteDocBtn.dataset.docId = docId;
+
+                deleteConfirmModal.show();
+            }
+        })
+
+        let documentTds = document.querySelectorAll('.doc-tr td:nth-child(-n + 4)');
+        Array.from(documentTds).forEach((td) => {
+            td.onclick = function () {
+                let docId = td.closest("tr").dataset.docId;
+
+                $.ajax({
+                    url: `@Url.Action("ViewDocument")?docId=${docId}`,
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    dataType: "binary",
+                    cache: false,
+                    xhr: function () {
+                        var xhr = new XMLHttpRequest();
+                        xhr.responseType= 'blob'
+                        return xhr;
+                    },
+                    success: function (output, status, xhr) {
+                        //console.log(output); //ArrayBuffer
+                        //console.log(new Blob([output])) // Blob
+                        var outputType = output.type;
+                        var blob = new Blob([output], { type: outputType });
+                        window.open(window.URL.createObjectURL(blob));
+                    }
+                });
+            }
+        })
+    }
+
+    function AddDocument(id) {
+        addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
+            keyboard: false
+        });
+
+        let url = `@Url.Action("AddDocument")`;
+        if (id) {
+            url += `?patientId=${id}`
+        }
+
+        document.getElementById('save-doc').style.display = 'block';
+        document.getElementById('add-doc-modal-label').textContent = 'Добавление информации о документе';
+        $.ajax({
+            url: url,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert").empty();
+            },
+            success: function (result) {
+                $("#partial-insert").html(result);
+                let modal = document.getElementById('add-edit-modal');
+
+                modal.addEventListener('shown.bs.modal', function () {
+                    document.getElementById('document-input').focus()
+                });
+
+                addEditModal.show();
+
+                $('#patient-select').select2({
+                    theme: "bootstrap-5",
+                    placeholder: 'Выберите пациента',
+                    dropdownParent: $('#add-edit-modal'),
+                    allowClear: true
+                });
+
+                $('#type-select').select2({
+                    theme: "bootstrap-5",
+                    placeholder: 'Выберите типа',
+                    dropdownParent: $('#add-edit-modal')
+                });
+            }
+        });
+    };
+
+    function EditDocument(docId) {
+        addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
+            keyboard: false
+        });
+
+        document.getElementById('save-doc').style.display = 'block';
+        document.getElementById('add-doc-modal-label').textContent = 'Редактирование информации о документе';
+        $.ajax({
+            url: `@Url.Action("EditDocument")?docId=${docId}`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert").empty();
+            },
+            success: function (result) {
+                $("#partial-insert").html(result);
+
+                addEditModal.show();
+
+                document.getElementById('doc-span').onclick = function () {
+                    let docId = this.dataset.docId;
+
+                    $.ajax({
+                        url: `@Url.Action("ViewDocument")?docId=${docId}`,
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        dataType: "binary",
+                        cache: false,
+                        xhr: function () {
+                            var xhr = new XMLHttpRequest();
+                            xhr.responseType= 'blob'
+                            return xhr;
+                        },
+                        success: function (output, status, xhr) {
+                            var outputType = output.type;
+                            var blob = new Blob([output], { type: outputType });
+                            window.open(window.URL.createObjectURL(blob));
+                        }
+                });
+            }
+
+                $('#patient-select').select2({
+                    theme: "bootstrap-5",
+                    placeholder: 'Выберите пациента',
+                    dropdownParent: $('#add-edit-modal'),
+                    allowClear: true
+                });
+
+                $('#type-select').select2({
+                    theme: "bootstrap-5",
+                    placeholder: 'Выберите типа',
+                    dropdownParent: $('#add-edit-modal')
+                });
+            }
+        });
+    };
+
+    function AddEditDocType() {
+        addEditTypeModal = new bootstrap.Modal(document.getElementById('add-edit-type-modal'), {
+            keyboard: false
+        });
+
+        $.ajax({
+            url: `@Url.Action("AddEditDocType")`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert-add-type").empty();
+            },
+            success: function (result) {
+                $("#partial-insert-add-type").html(result);
+
+                addEditTypeModal.show();
+
+                DocTypeViewScripts();
+            }
+        });
+    };
+
+    function DocTypeViewScripts() {
+        document.getElementById('add-doc-type').onclick = function () {
+            document.querySelector('.new-type-tr').style.display = 'table-row';
+            document.getElementById('new-type-input').focus();
+        }
+
+        Array.from(document.getElementsByClassName('edit-type')).forEach((btn) => {
+            btn.onclick = function () {
+                btn.closest('tr').querySelector('.type-name-span').style.display = 'none';
+                btn.closest('tr').querySelector('.type-name-input').style.display = 'block';
+                btn.style.display = 'none';
+                btn.closest('tr').querySelector('.save-type').style.display = 'block';
+            }
+        })
+
+        Array.from(document.getElementsByClassName('save-type')).forEach((btn) => {
+            btn.onclick = function () {
+                let id = btn.closest('tr').dataset.typeId;
+                let name = btn.closest('tr').querySelector('.type-name-input').value;
+                if (name.length === 0) {
+                    ohSnap("Введите название услуги", { 'color': 'red', 'duration': '5000' });
+                }
+                else {
+                    SaveDocType(id, name);
+                }
+            }
+        })
+    }
+
+    function SaveDocType(id, name) {
+        $.ajax({
+            url: `@Url.Action("SaveDocType")?id=${id}&name=${name}`,
+            method: 'POST',
+            beforeSend: function () {
+                $("#partial-insert-add-type").empty().html("<h4>Загрузка данных...</h4>");
+            },
+            success: function (result) {
+                $("#partial-insert-add-type").html(result);
+
+                DocTypeViewScripts();
+
+                ohSnap("Изменения успешно сохранены", { 'color': 'green', 'duration': '3000' });
+            }
+        });
+    }
+
+    function SaveDocument() {
+        let docId = document.getElementById('doc-id').value;
+        let patientId = document.getElementById('patient-select').value;
+        let typeId = document.getElementById('type-select').value;
+
+        if (docId === '0') {
+            let docInput = document.getElementById('document-input');
+            if (docInput.files.length > 0) {
+                let formData = new FormData();
+                formData.append('id', docId);
+                formData.append('status', document.getElementById('doc-status').value);
+                formData.append('patientId', patientId);
+                formData.append('typeId', typeId);
+                formData.append('name', docInput.files[0].name);
+                formData.append('content', docInput.files[0]);
+
+                $.ajax({
+                    url: `@Url.Action("SaveDocument")`,
+                    data: formData,
+                    method: 'POST',
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result.success) {
+                            addEditModal.toggle();
+                            LoadDocsList();
+                            ohSnap("Изменения успешно сохранены", { 'color': 'green', 'duration': '3000' });
+
+                            let parentWin = window.opener;
+
+                            if (parentWin) {
+                                if (typeof parentWin.ToggleViewModal == "function") {
+                                    parentWin.ToggleViewModal();
+                                }
+                                if (typeof parentWin.ViewPatient == "function") {
+                                    parentWin.ViewPatient(document.getElementById('patient-select').value);
+                                }
+                                parentWin.ohSnap("Документ успешно создан", { 'color': 'green', 'duration': '3000' });
+                            }
+                        }
+                        else {
+                            let validBlock = document.getElementById('add-edit-validation');
+                            validBlock.querySelector('ul').innerHTML = '';
+                            (result.data).forEach(function (item) {
+                                validBlock.querySelector('ul').innerHTML += '<li>' + item + '</li>';
+                            })
+
+                            $('#add-edit-modal').animate({ scrollTop: 0 }, 'slow');
+                        }
+                    }
+                });
+            }
+            else {
+                ohSnap("Файл не был выбран", { 'color': 'red', 'duration': '5000' });
+            }
+        }
+        else {
+            $.ajax({
+                url: `@Url.Action("SaveDocument")?id=${docId}&patientId=${patientId}&typeId=${typeId}`,
+                method: 'POST',
+                success: function (result) {
+                    if (result.success) {
+                        addEditModal.toggle();
+                        LoadDocsList();
+                        ohSnap("Изменения успешно сохранены", { 'color': 'green', 'duration': '3000' });
+                    }
+                    else {
+                        let validBlock = document.getElementById('add-edit-validation');
+                        validBlock.querySelector('ul').innerHTML = '';
+                        (result.data).forEach(function (item) {
+                            validBlock.querySelector('ul').innerHTML += '<li>' + item + '</li>';
+                        })
+
+                        $('#add-edit-modal').animate({ scrollTop: 0 }, 'slow');
+                    }
+                }
+            });
+        }
+    };
+
+    document.getElementById('delete-doc').onclick = function () {
+        let docId = this.dataset.docId;
+        $.ajax({
+            url: `@Url.Action("DeleteDocument")?docId=${docId}`,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    deleteConfirmModal.toggle();
+                    LoadDocsList();
+                    ohSnap("Документ успешно удалён", { 'color': 'green', 'duration': '3000' });
+                }
+            }
+        });
+    }
+
+</script>
+

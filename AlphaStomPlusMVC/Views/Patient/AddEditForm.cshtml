@@ -1,0 +1,82 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Patient;
+@model AddEditViewModel
+
+<div class="validation-block" id="add-edit-validation">
+    <ul></ul>
+</div>
+<form id="patient-form">
+    <div class="simple-column">
+        <input type="text" name="Id" hidden value="@Model.Patient.Id" />
+        <input type="text" name="Status" hidden value="@Model.Patient.Status" />
+
+        <label>ФИО<sup>*</sup></label>
+        <div class="simple-row">
+            <input type="text" name="FullName" class="form-control simple-row__item simple-row__item_size_large simple-row__item_grow_large" id="full-name" value="@Model.Patient.FullName" />
+        </div>
+
+        <div class="simple-row">
+            <div class="simple-column simple-row__item simple-row__item_size_medium simple-row__item_grow_medium">
+                <label>Дата рождения<sup>*</sup></label>
+                <input type="date" name="DateOfBirth" class="form-control" value="@Model.Patient.DateOfBirth.ToString("yyyy-MM-dd")" />
+            </div>
+
+            <div class="simple-column simple-row__item simple-row__item_size_small simple-row__item_grow_small">
+                <label>Пол<sup>*</sup></label>
+                <div class="simple-row">
+                    <select name="Sex" class="form-select">
+                        <option value="1" @(Model.Patient.Sex == 1 ? "selected" : "")>м</option>
+                        <option value="0" @(Model.Patient.Sex == 0 ? "selected" : "")>ж</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <label>Номер карты</label>
+        <div class="simple-row">
+            <input type="text" name="CardNumber" class="form-control simple-row__item simple-row__item_size_large simple-row__item_grow_large" value="@Model.Patient.CardNumber" />
+        </div>
+
+        <label>Телефон</label>
+        <div class="simple-row">
+            <input type="number" name="Phone" class="form-control simple-row__item simple-row__item_size_large simple-row__item_grow_large" value="@Model.Patient.Phone" />
+        </div>
+
+        <div class="simple-row">
+            <label>Снимок на руках: <input type="checkbox" name="HasXray" class="form-check-inline" value="@(Model.Patient.HasXray ? "true" : "false")" @(Model.Patient.HasXray ? "checked" : "") /></label>
+            <label>Снимок в клинике: <input type="checkbox" name="XrayInClinic" class="form-check-inline" value="@(Model.Patient.XrayInClinic ? "true" : "false")" @(Model.Patient.XrayInClinic ? "checked" : "") /></label>
+            <label>Страховка: <input type="checkbox" name="HasInsurance" class="form-check-inline" value="@(Model.Patient.HasInsurance ? "true" : "false")" @(Model.Patient.HasInsurance ? "checked" : "") /></label>
+        </div>
+    </div>
+</form>
+@if (Model.Patient.Id == 0)
+{
+    <form id="appointment-form">
+        <hr />
+        <div class="simple-row" id="appointment-block">
+            <div class="simple-column simple-row__item simple-row__item_size_medium simple-row__item_grow_large">
+                <label>Дата первого приёма</label>
+                <input type="datetime-local" name="Date" class="form-control" id="date" value="@(Model.Today.ToString("yyyy-MM-dd") + "T12:00")" />
+            </div>
+
+            <div class="simple-column simple-row__item simple-row__item_size_medium simple-row__item_grow_large">
+                <label>Врач</label>
+                <select name="DoctorId" class="form-select" id="doctor-select">
+                    @foreach (var doc in Model.Doctors)
+                    {
+                        <option value="@doc.Id">@doc.FullName</option>
+                    }
+                </select>
+            </div>
+
+            <div class="simple-column simple-row__item simple-row__item_size_medium simple-row__item_grow_large">
+                <label>Услуга</label>
+                <select name="ServiceId" class="form-select" id="service-select">
+                    @foreach (var service in Model.Services)
+                    {
+                        <option value="@service.Id">@service.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </form>
+}

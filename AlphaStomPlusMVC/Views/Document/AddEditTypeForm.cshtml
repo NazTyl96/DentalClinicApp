@@ -1,0 +1,45 @@
+﻿@using AlphaStomPlusMVC.Models;
+@model List<DocType>
+
+@{ 
+    int counter = 1;
+}
+
+<button type="button" class="btn btn-primary" id="add-doc-type"><i class="bi bi-file-plus-fill"></i> Добавить тип</button>
+@*<div id="ohsnap"></div>*@
+<div class="table-container" id="type-table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Название</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var type in Model)
+            {
+                <tr data-type-id="@type.Id" class="old-type-tr">
+                    <td>@(counter++)</td>
+                    <td>
+                        <span class="type-name-span">@type.TypeName</span>
+                        <input type="text" class="form-control type-name-input" style="display: none;" value="@type.TypeName" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-primary edit-type"><i class="bi bi-pencil-fill"></i> Редактировать</button>
+                        <button type="button" class="btn btn-sm btn-success save-type" style="display: none;"><i class="bi bi-check"></i> Сохранить</button>
+                    </td>
+                </tr>
+            }
+            <tr data-type-id="0" class="new-type-tr" style="display: none;">
+                <td>@(counter++)</td>
+                <td>
+                    <input type="text" class="form-control type-name-input" id="new-type-input" value="" />
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-success save-type"><i class="bi bi-check"></i> Сохранить</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

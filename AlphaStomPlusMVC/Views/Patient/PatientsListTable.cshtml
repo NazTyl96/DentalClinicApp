@@ -1,0 +1,49 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Patient;
+@model PatientsListViewModel
+@{ 
+    int counter = 1;
+}
+
+@if (Model.PatientsList.Any())
+{
+    <div class="table-container" id="patient-table-container">
+        <table class="table table-striped table-hover tablesorter" id="patients-list-table">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>ФИО</th>
+                    <th>Номер карты</th>
+                    <th>Дата рождения</th>
+                    <th>Пол</th>
+                    <th data-sorter="false"></th>
+                    <th data-sorter="false"></th>
+                </tr>
+            </thead>
+            <tbody> 
+                @foreach (var patient in Model.PatientsList)
+                {
+                <tr data-patient-id="@patient.Id">
+                    <td>@(counter++)</td>
+                    <td>@patient.FullName</td>
+                    <td>@patient.CardNumber</td>
+                    <td>@patient.DateOfBirth.ToShortDateString()</td>
+                    <td>@(patient.Sex == 1 ? "Мужской" : "Женский")</td>
+                    <td><button type="button" class="btn btn-sm btn-outline-primary edit-patient"><i class="bi bi-pencil-fill"></i> Редактировать</button></td>
+                    @if (patient.Status == 1)
+                    {
+                        <td><button type="button" class="btn btn-sm btn-outline-secondary delete-restore-btn delete-patient" data-patient-id="" onclick="DeletePatient(this)"><i class="bi bi-folder-plus"></i> Перевести в архив</button></td>
+                    }
+                    else
+                    {
+                        <td><button type="button" class="btn btn-sm btn-outline-secondary delete-restore-btn restore-patient"><i class="bi bi-folder-symlink"></i> Вернуть в работу</button></td>
+                    }
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <h4>Пациенты не найдены</h4>
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="501c354ec95f46a5bf0945ed7242fc0f" Name="Diagram1">
+        <EntityTypeShape EntityType="AlphaStomPlusModel.Appointment" Width="1.5" PointX="6" PointY="4.125" />
+        <EntityTypeShape EntityType="AlphaStomPlusModel.Doctor" Width="1.5" PointX="3.75" PointY="8" />
+        <EntityTypeShape EntityType="AlphaStomPlusModel.DocType" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AlphaStomPlusModel.Document" Width="1.5" PointX="3" PointY="4.25" />
+        <EntityTypeShape EntityType="AlphaStomPlusModel.Notification" Width="1.5" PointX="8.25" PointY="4.375" />
+        <EntityTypeShape EntityType="AlphaStomPlusModel.Patient" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="AlphaStomPlusModel.Service" PointX="3.375" PointY="0.875" Width="1.5" />
+        <AssociationConnector Association="AlphaStomPlusModel.FK__Appointme__Docto__2D27B809" />
+        <AssociationConnector Association="AlphaStomPlusModel.FK__Appointme__Patie__2C3393D0" />
+        <AssociationConnector Association="AlphaStomPlusModel.FK__Appointme__Servi__2E1BDC42" />
+        <AssociationConnector Association="AlphaStomPlusModel.FK__Notificat__Appoi__619B8048" />
+        <AssociationConnector Association="AlphaStomPlusModel.FK__Document__TypeId__33D4B598" />
+        <AssociationConnector Association="AlphaStomPlusModel.FK__Document__Patien__32E0915F" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

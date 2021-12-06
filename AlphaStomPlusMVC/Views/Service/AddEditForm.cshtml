@@ -1,0 +1,34 @@
+﻿@using AlphaStomPlusMVC.Models;
+@model Service
+
+<div class="validation-block" id="add-edit-validation">
+    <ul></ul>
+</div>
+<form id="service-form">
+    <div class="simple-column">
+        <input type="text" name="Id" id="service-id" hidden value="@Model.Id" />
+        <input type="text" name="Status" hidden value="@Model.Status" />
+
+        <label>Название услуги<sup>*</sup></label>
+        <div class="simple-row">
+            <input type="text" name="Name" class="form-control simple-row__item simple-row__item_size_large simple-row__item_grow_large" id="service-name" value="@Model.Name" />
+        </div>
+
+        <label>Стоимость</label>
+        <div class="simple-row">
+            <input type="text" name="Cost" class="form-control simple-row__item simple-row__item_size_large simple-row__item_grow_large" id="service-cost" value="@Model.Cost" />
+        </div>
+
+        <label>Тип</label>
+        <select name="Type" class="form-select simple-column__item simple-column__item_size_large" id="service-type">
+            <option value="0" @(Model.Type == 0 ? "selected" : "")>Терапия</option>
+            <option value="1" @(Model.Type == 1 ? "selected" : "")>Хирургия</option>
+            <option value="2" @(Model.Type == 2 ? "selected" : "")>Ортопедия</option>
+            <option value="3" @(Model.Type == 3 ? "selected" : "")>Ортодонтия</option>
+        </select>
+
+        @*<div class="simple-row">
+            <label>Является услугой по умолчанию: <input type="checkbox" name="IsDefault" class="form-check-inline" id="service-is-default" value="@(Model.IsDefault ? "true" : "false")" @(Model.IsDefault ? "checked disabled" : "") /></label>
+        </div>*@
+    </div>
+</form>

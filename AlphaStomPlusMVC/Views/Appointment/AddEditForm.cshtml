@@ -1,0 +1,52 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Appointment;
+@model AddEditViewModel
+
+<div class="validation-block" id="add-edit-validation">
+    <ul></ul>
+</div>
+<form id="app-form">
+    <div class="simple-column">
+        <input type="text" name="Id" id="app-id" hidden value="@Model.Appointment.Id" />
+
+        <label>Дата<sup>*</sup></label>
+        <input type="datetime-local" class="form-control simple-column__item simple-column__item_size_large" id="date-input" name="Date" value="@(Model.Appointment.Id > 0 ? Model.Appointment.Date.ToString("yyyy-MM-dd") + "T" + Model.Appointment.Date.ToShortTimeString() : Model.Appointment.Date.ToString("yyyy-MM-dd") + "T12:00")" />
+
+        <label>Пациент<sup>*</sup></label>
+        <select class="form-select simple-column__item simple-column__item_size_large" id="patient-select" name="PatientId">
+            <option></option>
+            @foreach (var item in Model.PatientSelect)
+            {
+                <option value="@item.Id" @(item.Id == Model.Appointment.PatientId ? "selected" : "")>@item.FullName (@item.DateOfBirth.ToShortDateString())</option>
+            }
+        </select>
+
+        <label>Врач<sup>*</sup></label>
+        <select class="form-select simple-column__item simple-column__item_size_large" id="doctor-select" name="DoctorId">
+            <option></option>
+            @foreach (var item in Model.DoctorSelect)
+            {
+                <option value="@item.Id" @(item.Id == Model.Appointment.DoctorId ? "selected" : "")>@item.FullName</option>
+            }
+        </select>
+
+        <label>Услуга</label>
+        <select class="form-select simple-column__item simple-column__item_size_large" id="service-select" name="ServiceId">
+            @*<option value="0" @(Model.Appointment.ServiceId == 0 ? "selected" : "")>Не выбрана</option>*@
+            @foreach (var item in Model.ServiceSelect)
+            {
+                if (item.Id == Model.Appointment.ServiceId)
+                {
+                    <option value="@item.Id" selected>@item.Name</option>
+                }
+                else
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            }
+        </select>
+
+        <label>Комментарий</label>
+        <textarea class="form-control" id="comment-input" name="Comment">@Model.Appointment.Comment</textarea>
+
+    </div>
+</form>

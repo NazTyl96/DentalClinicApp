@@ -1,0 +1,40 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Document;
+@model DocumentsListViewModel
+@{ 
+    int counter = 1;
+}
+
+@if (Model.Documents.Any())
+{
+    <div class="table-container" id="doc-table-container">
+        <table class="table table-striped table-hover tablesorter" id="documents-list-table">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Название</th>
+                    <th>Пациент</th>
+                    <th>Тип</th>
+                    <th data-sorter="false"></th>
+                    <th data-sorter="false"></th>
+                </tr>
+            </thead>
+            <tbody> 
+                @foreach (var doc in Model.Documents)
+                {
+                <tr class="doc-tr" data-doc-id="@doc.Id">
+                    <td>@(counter++)</td>
+                    <td>@doc.Name</td>
+                    <td>@doc.PatientName</td>
+                    <td>@doc.DocTypeName</td>
+                    <td><button type="button" class="btn btn-sm btn-outline-primary edit-doc"><i class="bi bi-pencil-fill"></i> Редактировать</button></td>
+                    <td><button type="button" class="btn btn-sm btn-outline-danger delete-btn delete-doc" data-doc-id=""><i class="bi bi-trash-fill"></i> Удалить</button></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <h4>Документы не найдены</h4>
+}

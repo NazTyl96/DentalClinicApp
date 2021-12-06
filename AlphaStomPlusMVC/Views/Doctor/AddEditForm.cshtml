@@ -1,0 +1,22 @@
+﻿@using AlphaStomPlusMVC.Models;
+@model Doctor
+
+<div class="validation-block" id="add-edit-validation">
+    <ul></ul>
+</div>
+<form id="doctor-form">
+    <div class="simple-column">
+        <input type="text" name="Id" hidden value="@Model.Id" />
+        <input type="text" name="Status" hidden value="@Model.Status" />
+
+        <label>ФИО<sup>*</sup></label>
+        <div class="simple-row">
+            <input name="FullName" class="form-control simple-row__item simple-row__item_size_large simple-row__item_grow_large" id="full-name" value="@Model.FullName" />
+        </div>
+
+        <label>Должность</label>
+        <div class="simple-row">
+            <input type="text" name="Position" class="form-control simple-row__item simple-row__item_size_large simple-row__item_grow_large" value="@Model.Position" />
+        </div>
+    </div>
+</form>

@@ -1,0 +1,58 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Appointment;
+@model AppointmentsListViewModel
+
+@{ 
+    int appCounter = 1;
+}
+
+<div class="view-appointments" id="view-form">
+
+    <input type="text" id="app-date" hidden value="@Model.DateString" />
+
+    <div class="appointment-view__action-buttons simple-row" id="appointment-buttons">
+        <button type="button" class="btn btn-primary action-buttons__button" id="add-appointment" data-bs-target="#add-edit-modal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-calendar2-plus-fill"></i> Добавить запись на прием</button>
+    </div>
+
+    <div class="appointment-view__appointments" id="appointments-table">
+        @if (Model.Appointments.Any())
+        {
+            <div class="table-container" id="appointments-table-container">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Пациент</th>
+                            <th>Врач</th>
+                            <th>Время</th>
+                            <th>Услуга</th>
+                            <th>Стоимость</th>
+                            <th>Комментарий</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var app in Model.Appointments)
+                        {
+                            <tr data-appointment-id="@app.AppointmentId">
+                                <td>@(appCounter++)</td>
+                                <td>@app.PatientName</td>
+                                <td>@app.DoctorName</td>
+                                <td>@app.Time</td>
+                                <td>@app.ServiceName</td>
+                                <td>@(app.ServiceCost.ToString() ?? "")</td>
+                                <td>@app.Comment</td>
+                                <td><button type="button" class="btn btn-sm btn-outline-primary edit-app" data-bs-target="#add-edit-modal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-pencil-fill"></i> Редактировать</button></td>
+                                <td><button type="button" class="btn btn-sm btn-outline-danger delete-btn delete-app" data-bs-target="#delete-confirm-modal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-trash-fill"></i> Отменить</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <span>Записи на приём не найдены</span>
+        }
+    </div>
+</div>

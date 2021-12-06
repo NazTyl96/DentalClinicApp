@@ -1,0 +1,601 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Patient;
+@using System.Globalization;
+@model ViewPatientViewModel
+
+@{
+    Layout = null;
+
+    var age = DateTime.Now.Year - Model.Patient.DateOfBirth.Year;
+    if (DateTime.Now.DayOfYear < Model.Patient.DateOfBirth.DayOfYear)
+    {
+        age++;
+    }
+
+    string sex = Model.Patient.Sex == 1 ? "М" : "Ж";
+
+    var culture = CultureInfo.CreateSpecificCulture("ru-RU");
+    //model.Patient.DateOfBirth.ToString("dddd d MMMM", culture);
+}
+
+<style>
+    .nowrap {
+        white-space: nowrap;
+    }
+
+    .text-line {
+        border: 0;
+        border-bottom: 1px solid black;
+        width: 100%;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid black;
+    }
+
+    .table-bottom-bordered th,
+    .table-bottom-bordered td {
+        border: none;
+        border-bottom: 1px solid black;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+        table td {
+            height: 18px;
+        }
+
+        table .none-top-border {
+            border-top: none;
+        }
+
+    .table-full {
+        width: 100%;
+    }
+
+    .table-only-bottom tr,
+    .table-only-bottom th,
+    .table-only-bottom td {
+        border-left: none;
+        border-right: none;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    /**/
+    .wrap-out {
+        box-shadow: 1px 2px 10px rgb(0 0 0 / 30%);
+        width: 100vw;
+        max-width: 900px;
+        min-height: 95vh;
+        padding: 15px 30px;
+        margin: 15px;
+        margin-top: 45px;
+    }
+</style>
+<style media="print">
+    .table-full {
+        /*width: 170mm;*/
+    }
+
+    .table-bordered tr {
+        /*border: 1px solid black;*/
+        height: 5mm;
+        min-height: 5mm;
+    }
+
+    /**/
+    .new-page {
+        page-break-before: always;
+    }
+
+    div[contenteditable="true"] {
+        background-color: none;
+        margin: 2px 0px;
+    }
+
+    td span.help {
+        position: absolute;
+        left: 0;
+        bottom: -7px;
+        z-index: 1;
+        font-size: 0.5rem;
+        line-height: 0.9;
+    }
+
+    .tip {
+        display: none;
+    }
+
+    .wrap-out {
+        box-shadow: none;
+        width: auto;
+        max-width: none;
+        height: auto;
+        padding: 0;
+        margin: 0;
+    }
+</style>
+
+<div class="wrap-out">
+    <span>Врач:</span>
+    <table class="table table-bordered table-only-bottom table-full">
+        <tbody>
+            <tr>
+                <td colspan="2" style="border-right: 1px solid black;"></td>
+                <td style="width: 35%;">
+                    <div class="flex-div">
+                        <span class="nowrap">Код формы по ОКУД</span><div class="text-line"></div>
+                        <br />
+                        <span class="nowrap">Код учреждения по ОКПО</span><div class="text-line"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">Министерство здравоохранения РФ</td>
+                <td style="border-left: 1px solid black; border-right: 1px solid black;"></td>
+                <td class="text-center">Медицинская документация</td>
+            </tr>
+            <tr>
+                <td class="text-center" style="vertical-align: top;">Наименование учреждения</td>
+                <td style="border-left: 1px solid black; border-right: 1px solid black; width: 10%;"></td>
+                <td style="text-align: center;">
+                    Форма № 043/у
+                    <br />
+                    Утверждена Минздравом СССР
+                    <br />
+                    04.10.80 № 1030
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h2 class="text-center" style="margin-bottom: 10px;">Медицинская карта стоматологического больного № _________</h2>
+    <div class="text-center" style="margin-bottom: 10px;"><span style="text-decoration: underline;">@(DateTime.Now.ToString("d MMMM yyyy", culture))г.</span></div>
+    <table class="table table-bordered table-only-bottom table-full">
+        <tbody>
+            <tr>
+                <td colspan="2" class="none-top-border">Фамилия, имя, отчество: <b>@(Model.Patient.FullName)</b> </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>возраст: <b>@(age)</b></td>
+            </tr>
+            <tr>
+                <td>Пол (М/Ж): <b>@(sex)</b></td>
+                <td>Адрес</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td>Профессия</td>
+                <td>Телефон: @(Model.Patient.Phone)</td>
+            </tr>
+            <tr>
+                <td colspan="2">Диагноз</td>
+            </tr>
+            <tr>
+                <td colspan="2">Жалобы</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td>Перенесенные и сопутствующие заболевания</td>
+                <td rowspan="6">
+                    Гепатит:
+                    <br />
+                    Туберкулёз:
+                    <br />
+                    ССЗ:
+                    <br />
+                    ВВЗ:
+                    <br />
+                    СПИД:
+                    <br />
+                    Аллергия:
+                    <br />
+                    Онко-заболевания:
+                    <br />
+
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Развитие настоящего заболевания</td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">Данные объективного исследования, внешний осмотр</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            @*<tr>
+                    <td colspan="2"></td>
+                </tr>*@
+        </tbody>
+    </table>
+    <br />
+    <table class="table-bordered table-full">
+        <tbody>
+            <tr>
+                <td rowspan="6" style="width: 45%;">Осмотр полости рта. Состояние зубов<br />Условные обозначения: отсутсвует - О, корень - R<br />Кариес - С, пульпит - Р, периодонтит -Pt пломбированный - П,<br />Парадонтоз - А, подвижность - I, II, III (степень) коронка К, иск. зуб. - И.</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="text-center">8</td>
+                <td class="text-center">7</td>
+                <td class="text-center">6</td>
+                <td class="text-center">5</td>
+                <td class="text-center">4</td>
+                <td class="text-center">3</td>
+                <td class="text-center">2</td>
+                <td class="text-center">1</td>
+                <td class="text-center">1</td>
+                <td class="text-center">2</td>
+                <td class="text-center">3</td>
+                <td class="text-center">4</td>
+                <td class="text-center">5</td>
+                <td class="text-center">6</td>
+                <td class="text-center">7</td>
+                <td class="text-center">8</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered table-only-bottom table-full">
+        <tbody>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Прикус</td>
+            </tr>
+            <tr>
+                <td>Состояние слизистой оболочки рта, десен, альвеоляорных, отростков и нёба</td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center" style="font-size:large; margin: 10px 0;">Лист дозовых нагрузок пациента при рентгенологическогих исследованиях</div>
+
+    <table class="table table-bordered table-full">
+        <thead>
+            <tr>
+                <th style="width: 5%;">NN п\п</th>
+                <th style="width: 10%;">Дата</th>
+                <th>Вид исследования, <br /> <i>количество и вид процедур</i></th>
+                <th style="width: 20%;">Эффективная доза за исследование, <br /> <i>мЗв</i></th>
+                <th>Примечание</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered table-full new-page">
+        <thead>
+            <tr>
+                <th style="width: 10%;">Дата</th>
+                <th>ДНЕВНИК<br />анамнез, статус. диагноз и лечение при обращении с повторными заболеваниями</th>
+                <th style="width: 15%;">Фамилия лечащего врача</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered table-only-bottom table-full">
+        <tbody>
+            <tr>
+                <td>Результаты лечения (эпикриз)</td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Наставления</td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table class="table table-only-bottom table-full">
+        <tbody>
+            <tr>
+                <td style="float: right;">Лечащий врач</td>
+                <td style="width: 24%; border-bottom: 1px solid black;"></td>
+                <td style="float: right;">Заведующий отделением</td>
+                <td style="width: 24%; border-bottom: 1px solid black;"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bottom-bordered table-only-bottom table-full">
+        <tbody>
+            <tr>
+                <td>Лечение</td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table class="table table-bordered table-full">
+        <thead>
+            <tr>
+                <th style="width: 10%;">Дата</th>
+                <th>ДНЕВНИК<br />анамнез, статус. диагноз и лечение при обращении с повторными заболеваниями</th>
+                <th style="width: 15%;">Фамилия лечащего врача</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bottom-bordered table-only-bottom table-full">
+        <tbody>
+            <tr>
+                <td>Результаты лечения (эпикриз)</td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

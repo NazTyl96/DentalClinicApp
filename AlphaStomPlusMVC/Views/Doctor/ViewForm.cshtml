@@ -1,0 +1,61 @@
+﻿@using AlphaStomPlusMVC.Models;
+@using AlphaStomPlusMVC.Models.ViewModels.Doctor;
+@model ViewDoctorViewModel
+
+@{ 
+    int appCounter = 1;
+}
+
+<div class="view-patient" id="view-form">
+    <div class="patient-view__info-form simple-column" id="doctor-info">
+        <input type="text" name="Id" id="doctor-id" hidden value="@Model.Doctor.Id" />
+
+        <label>ФИО</label>
+        <div class="simple-row">
+            <span>@Model.Doctor.FullName</span>
+        </div>
+
+        <label>Должность</label>
+        <div class="simple-row">
+            <span>@Model.Doctor.Position</span>
+        </div>
+    </div>
+
+    <div class="patient-view__action-buttons simple-column" id="doctor-buttons">
+        <button type="button" class="btn btn-primary action-buttons__button" id="add-appointment"><i class="bi bi-calendar2-plus-fill"></i> Записать пациента на приём</button>
+    </div>
+
+    <div class="patient-view__appointments" id="doctor-appointments">
+        <h5>Предстоящие приёмы</h5>
+        @if (Model.Appointments.Any())
+        {
+            <div class="table-container" id="appointments-table-container">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Дата</th>
+                            <th>Пациент</th>
+                            <th>Услуга</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var app in Model.Appointments)
+                        {
+                            <tr>
+                                <td>@(appCounter++)</td>
+                                <td>@(app.Date.Date.ToShortDateString() + " " + app.Date.ToShortTimeString())</td>
+                                <td>@app.PatientName</td>
+                                <td>@app.ServiceName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <span>Предстоящих приёмов нет</span>
+        }
+    </div>
+</div>

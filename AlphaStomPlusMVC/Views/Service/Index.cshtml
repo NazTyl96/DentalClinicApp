@@ -1,0 +1,351 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Service;
+@model IndexViewModel
+
+<style>
+    sup {
+        color: red;
+    }
+
+    #buttons {
+        margin: 20px 0px;
+    }
+
+    #apply-filters,
+    #clear-filters {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+
+    #service-table-container {
+        max-height: 60vh;
+    }
+
+</style>
+
+<h2>Услуги клиники</h2>
+
+<div class="simple-row" id="buttons">
+    @if (Model.Status == 1)
+    {
+        <button type="button" class="btn btn-primary simple-row__item" id="add-service" onclick="AddService()"><i class="bi bi-clipboard-plus"></i> Добавить услугу</button>
+        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="ChangeStatus()"><i class="bi bi-folder-fill"></i> Перейти в архив</button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="ChangeStatus()"><i class="bi bi-person-rolodex"></i> Перейти к услугам в работе</button>
+    }
+</div>
+
+<div class="filter-row">
+    <div class="filter-row__column-unit filter-row__column-unit_size_large">
+        <label>Название услуги</label>
+        <select id="service-filter" multiple>
+            @foreach (var item in Model.ServicesFilter)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="simple-row">
+        <button type="button" class="btn btn-primary simple-row__item" id="apply-filters" onclick="LoadServiceList()"><i class="bi bi-funnel-fill"></i> Применить фильтры</button>
+        <button type="button" class="btn btn-secondary simple-row__item" id="clear-filters" onclick="ClearFilters()"><i class="bi bi-funnel"></i> Очистить фильтры</button>
+    </div>
+</div>
+
+<div id="table-div"></div>
+
+@*модальное окно подтверждения*@
+<div class="modal fade" id="delete-confirm-modal" tabindex="-1" aria-labelledby="delete-service-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-service-label">Подтвердите действие</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="delete-confirm-modal__question"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success delete-confirm" id="delete-service" onclick="">Да</button>
+                <button type="button" class="btn btn-success delete-confirm" id="restore-service" onclick="">Да</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+@*модальноe окно добавления/редактирования услуги*@
+<div class="modal fade" id="add-edit-modal" tabindex="-1" aria-labelledby="add-service-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-service-modal-label"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="partial-insert"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-success" id="save-service" onclick="SaveService()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+<script>
+    document.querySelector('.section-list__section#service').classList.add('section-list__section_active');
+
+    let addEditModal;
+    let deleteConfirmModal;
+
+    $(function () {
+        CheckForNewNotifications();
+
+        $('#service-filter').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Выберите услугу'
+        });
+
+        document.getElementById('clear-filters').onclick = function () {
+
+            $('#service-filter').val('');
+            $('#service-filter').trigger('change');
+
+            LoadServiceList();
+        }
+
+        LoadServiceList();
+    });
+
+    function ChangeStatus() {
+
+        let curStatus = '@Model.Status';
+
+        let newStatus;
+        if (curStatus === '1') {
+            newStatus = '0';
+        }
+        else {
+            newStatus = '1';
+        }
+
+        document.location.assign(`@Url.Action("Index")?status=${newStatus}`)
+    }
+
+    function LoadServiceList() {
+        let serviceFilter = $('#service-filter').val() || '';
+        $.ajax({
+            url: `@Url.Action("LoadServicesList")?serviceIds=${serviceFilter}&status=@Model.Status`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#table-div").empty().html("<h4>Загрузка данных...</h4>");
+            },
+            success: function (result) {
+                $("#table-div").html(result);
+                AfterLoadTable();
+            }
+        });
+    };
+
+    function AfterLoadTable() {
+
+        $("#services-list-table").tablesorter({
+            cssIcon: 'tablesorter-icon',
+            headerTemplate: '{icon}{content}',
+            cssChildRow: "tablesorter-childRow"
+        });
+
+        let editButtons = Array.from(document.getElementsByClassName('edit-service'));
+        editButtons.forEach((btn) => {
+            btn.onclick = function () {
+                EditService(btn.closest('tr').dataset.serviceId);
+            }
+        })
+
+        let deleteRestoreButtons = Array.from(document.getElementsByClassName('delete-restore-btn'));
+        deleteRestoreButtons.forEach((btn) => {
+            btn.onclick = function () {
+                deleteConfirmModal = new bootstrap.Modal(document.getElementById('delete-confirm-modal'), {
+                    keyboard: false
+                });
+
+                let serviceId = btn.closest('tr').dataset.serviceId;
+                let question = document.getElementById('delete-confirm-modal__question');
+
+                if (btn.classList.contains('delete-service')) {
+                    question.textContent = 'Вы действительно хотите перевести данную услугу в архив?';
+                    let deleteServiceBtn = document.getElementById('delete-service');
+                    document.getElementById('restore-service').style.display = 'none';
+                    deleteServiceBtn.style.display = 'block';
+                    deleteServiceBtn.dataset.serviceId = serviceId;
+                }
+                else {
+                    question.textContent = 'Вы действительно хотите вернуть данную услугу в работу?';
+                    let restoreServiceBtn = document.getElementById('restore-service');
+                    document.getElementById('delete-service').style.display = 'none';
+                    restoreServiceBtn.style.display = 'block';
+                    restoreServiceBtn.dataset.serviceId = serviceId;
+                }
+
+                deleteConfirmModal.show();
+            }
+        })
+    }
+
+    function AddService() {
+        addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
+            keyboard: false
+        });
+
+        document.getElementById('save-service').style.display = 'block';
+        document.getElementById('add-service-modal-label').textContent = 'Добавление информации об услуге';
+        $.ajax({
+            url: `@Url.Action("AddService")`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert").empty();
+            },
+            success: function (result) {
+                $("#partial-insert").html(result);
+                let modal = document.getElementById('add-edit-modal');
+                let nameInput = document.getElementById('service-name');
+
+                modal.addEventListener('shown.bs.modal', function () {
+                    nameInput.focus()
+                })
+
+                let checkboxes = Array.from(document.getElementsByClassName('form-check-inline'));
+                checkboxes.forEach((chk) => {
+                    chk.onchange = function () {
+                        if (chk.checked) {
+                            chk.value = true;
+                        }
+                        else {
+                            chk.value = false;
+                        }
+                    }
+                });
+
+                $('#service-type').select2({
+                    theme: "bootstrap-5",
+                    dropdownParent: $('#add-edit-modal')
+                });
+
+                addEditModal.show();
+            }
+        });
+    };
+
+    function EditService(serviceId) {
+        addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
+            keyboard: false
+        });
+
+        document.getElementById('save-service').style.display = 'block';
+        document.getElementById('add-service-modal-label').textContent = 'Редактирование информации об услуге';
+        $.ajax({
+            url: `@Url.Action("EditService")?id=${serviceId}`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert").empty();
+            },
+            success: function (result) {
+                $("#partial-insert").html(result);
+
+                let checkboxes = Array.from(document.getElementsByClassName('form-check-inline'));
+                checkboxes.forEach((chk) => {
+                    chk.onchange = function () {
+                        if (chk.checked) {
+                            chk.value = true;
+                        }
+                        else {
+                            chk.value = false;
+                        }
+                    }
+                });
+
+                $('#service-type').select2({
+                    theme: "bootstrap-5",
+                    dropdownParent: $('#add-edit-modal')
+                });
+
+                addEditModal.show();
+            }
+        });
+    };
+
+    function SaveService() {
+        let id = document.getElementById('service-id').value || 0;
+        let name = document.getElementById('service-name').value;
+        let cost = document.getElementById('service-cost').value;
+        let type = document.getElementById('service-type').value;
+
+        $.ajax({
+            url: `@Url.Action("SaveService")?id=${id}&name=${name}&cost=${cost}&type=${type}`,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    addEditModal.toggle();
+                    LoadServiceList();
+                    ohSnap("Изменения успешно сохранены", { 'color': 'green', 'duration': '3000' });
+                }
+                else {
+                    let validBlock = document.getElementById('add-edit-validation');
+                    validBlock.querySelector('ul').innerHTML = '';
+                    (result.data).forEach(function (item) {
+                        validBlock.querySelector('ul').innerHTML += '<li>' + item + '</li>';
+                    })
+
+                    $('#add-edit-modal').animate({ scrollTop: 0 }, 'slow');
+                }
+            }
+        });
+    };
+
+    document.getElementById('delete-service').onclick = function () {
+        let serviceId = this.dataset.serviceId;
+        $.ajax({
+            url: `@Url.Action("DeleteService")?serviceId=${serviceId}`,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    deleteConfirmModal.toggle();
+                    LoadServiceList();
+                    ohSnap("Услуга переведена в архив", { 'color': 'green', 'duration': '3000' });
+                }
+                else if (result.data == "hasAppointment") {
+                    deleteConfirmModal.toggle();
+                    ohSnap("В системе есть записи на приём с данной услугой. Перед переведением данной услуги в архив, отредактируйте или отмените все приёмы с данной услугой", { 'color': 'red', 'duration': '15000' });
+                }
+                //else {
+                //    if (result.data == "default") {
+                //        deleteConfirmModal.toggle();
+                //        ohSnap("Перед переведением данной услуги в архив назначьте новую услугу по умолчанию", { 'color': 'red', 'duration': '10000' });
+                //    }
+                //}
+            }
+        });
+    }
+
+    document.getElementById('restore-service').onclick = function () {
+        let serviceId = this.dataset.serviceId;
+        $.ajax({
+            url: `@Url.Action("RestoreService")?serviceId=${serviceId}`,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    deleteConfirmModal.toggle();
+                    LoadServiceList();
+                    ohSnap("Услуга была возвращена в работу", { 'color': 'green', 'duration': '3000' });
+                }
+            }
+        });
+    }
+
+</script>
+

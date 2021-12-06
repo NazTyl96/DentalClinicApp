@@ -1,0 +1,546 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Patient;
+@model IndexViewModel
+
+<style>
+    sup {
+        color: red;
+    }
+
+    #apply-filters,
+    #clear-filters {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+
+    #patient-table-container {
+        max-height: 60vh;
+    }
+
+    #patient-table-container table tbody tr:hover {
+        cursor: pointer;
+    }
+
+    #buttons {
+        margin: 20px 0px;
+    }
+
+    #appointment-block {
+        flex-wrap: nowrap;
+        margin-bottom: 10px;
+    }
+
+    #view-form {
+        display: grid;
+        grid-template-areas: "info info info buttons"
+                             "docs docs appointments appointments";
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto auto;
+        gap: 30px 10px;
+    }
+
+    #partial-insert-view {
+        background-color: lavender;
+    }
+
+    #patient-info {
+        grid-area: info;
+        background-color: white;
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+    #patient-buttons {
+        grid-area: buttons;
+        justify-content: flex-start;
+    }
+
+    #patient-buttons button.btn {
+        align-self: stretch;
+    }
+
+    #patient-docs {
+        grid-area: docs;
+        background-color: white;
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+    #patient-appointments {
+        grid-area: appointments;
+        background-color: white;
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+    #documents-table-container,
+    #appointments-table-container {
+        height: 40vh;
+    }
+
+    .doc-tr td:hover {
+        cursor: pointer;
+    }
+</style>
+
+<h2>Пациенты клиники</h2>
+
+<div class="simple-row" id="buttons">
+    @if (Model.Status == 1)
+    {
+        <button type="button" class="btn btn-primary simple-row__item" id="add-patient" onclick="AddPatient()"><i class="bi bi-person-plus-fill"></i> Добавить пациента</button>
+        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="ChangeStatus()"><i class="bi bi-folder-fill"></i> Перейти в архив</button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="ChangeStatus()"><i class="bi bi-person-rolodex"></i> Перейти к пациентам в работе</button>
+    }
+</div>
+
+<div class="filter-row">
+    <div class="filter-row__column-unit filter-row__column-unit_size_large">
+        <label>ФИО</label>
+        <select id="fullname-filter" multiple>
+            @foreach (var item in Model.FullNames)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+    </div>
+
+    <div class="filter-row__column-unit filter-row__column-unit_size_medium">
+        <label>Дата рождения</label>
+        <select id="birthdate-filter" multiple>
+            @foreach (var item in Model.DatesOfBirth)
+            {
+                <option value="@item.ToShortDateString()">@item.ToShortDateString()</option>
+            }
+        </select>
+    </div>
+
+    <div class="filter-row__column-unit filter-row__column-unit_size_medium">
+        <label>Пол</label>
+        <select id="sex-filter" multiple>
+            @foreach (var item in Model.Sexes)
+            {
+                <option value="@item">@(item == 1 ? "Мужской" : "Женский")</option>
+            }
+        </select>
+    </div>
+
+    <div class="simple-row">
+        <button type="button" class="btn btn-primary simple-row__item" id="apply-filters" onclick="LoadPatientList()"><i class="bi bi-funnel-fill"></i> Применить фильтры</button>
+        <button type="button" class="btn btn-secondary simple-row__item" id="clear-filters" onclick="ClearFilters()"><i class="bi bi-funnel"></i> Очистить фильтры</button>
+    </div>
+</div>
+
+
+<div id="table-div"></div>
+
+@*модальное окно подтверждения*@
+<div class="modal fade" id="delete-confirm-modal" tabindex="-1" aria-labelledby="delete-patient-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-patient-label">Подтвердите действие</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="delete-confirm-modal__question"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success delete-confirm" id="delete-patient" onclick="">Да</button>
+                <button type="button" class="btn btn-success delete-confirm" id="restore-patient" onclick="">Да</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+@*модальноe окно добавления/редактирования пациента*@
+<div class="modal fade" id="add-edit-modal" tabindex="-1" aria-labelledby="add-patient-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-patient-modal-label"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="partial-insert"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-success" id="save-patient" onclick="SavePatient()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+@*модальноe окно просмотра пациента*@
+<div class="modal fade" id="view-modal" tabindex="-1" aria-labelledby="view-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="view-modal-label">Просмотр информации о пациенте</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body patient-view" id="partial-insert-view"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*конец модального*@
+
+<script>
+    document.querySelector('.section-list__section#patient').classList.add('section-list__section_active');
+
+    let addEditModal;
+    let viewModal;
+    let deleteConfirmModal;
+
+    $(function () {
+        CheckForNewNotifications();
+
+        $('#fullname-filter').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Выберите ФИО'
+        });
+
+        $('#birthdate-filter').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Дата рождения'
+        });
+
+        $('#sex-filter').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Выберите пол'
+        });
+
+        document.getElementById('clear-filters').onclick = function () {
+
+            $('#fullname-filter').val('');
+            $('#fullname-filter').trigger('change');
+            $('#birthdate-filter').val('');
+            $('#birthdate-filter').trigger('change');
+            $('#sex-filter').val('');
+            $('#sex-filter').trigger('change');
+
+            LoadPatientList();
+        }
+
+        LoadPatientList();
+    });
+
+    //функция для дочернего окна
+    function ToggleViewModal() {
+        viewModal.toggle();
+    };
+
+    function ChangeStatus() {
+
+        let curStatus = '@Model.Status';
+
+        let newStatus;
+        if (curStatus === '1') {
+            newStatus = '0';
+        }
+        else {
+            newStatus = '1';
+        }
+
+        document.location.assign(`@Url.Action("Index")?status=${newStatus}`)
+    }
+
+    function LoadPatientList() {
+        let fullNameFilter = $('#fullname-filter').val() || '';
+        let dateOfBirthFilter = $('#birthdate-filter').val() || '';
+        let sexFilter = $('#sex-filter').val() || '';
+        $.ajax({
+            url: `@Url.Action("LoadPatientsList")?fullNames=${fullNameFilter}&datesOfBirth=${dateOfBirthFilter}&sexes=${sexFilter}&status=@Model.Status`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#table-div").empty().html("<h4>Загрузка данных...</h4>");
+            },
+            success: function (result) {
+                $("#table-div").html(result);
+                AfterLoadTable();
+            }
+        });
+    };
+
+    function AfterLoadTable() {
+
+        $("#patients-list-table").tablesorter({
+            cssIcon: 'tablesorter-icon',
+            headerTemplate: '{icon}{content}',
+            cssChildRow: "tablesorter-childRow"
+        });
+
+        let patientTds = Array.from(document.querySelectorAll('table tbody tr td:nth-child(-n + 5)'));
+        patientTds.forEach((td) => {
+            td.onclick = function () {
+                ViewPatient(td.closest('tr').dataset.patientId);
+            }
+        })
+
+        let editButtons = Array.from(document.getElementsByClassName('edit-patient'));
+        editButtons.forEach((btn) => {
+            btn.onclick = function () {
+                EditPatient(btn.closest('tr').dataset.patientId);
+            }
+        })
+
+        let deleteRestoreButtons = Array.from(document.getElementsByClassName('delete-restore-btn'));
+        deleteRestoreButtons.forEach((btn) => {
+            btn.onclick = function () {
+                deleteConfirmModal = new bootstrap.Modal(document.getElementById('delete-confirm-modal'), {
+                    keyboard: false
+                });
+
+                let patientId = btn.closest('tr').dataset.patientId;
+                let question = document.getElementById('delete-confirm-modal__question');
+
+                if (btn.classList.contains('delete-patient')) {
+                    question.innerHTML = `<span id="delete-confirm-modal__warning">При переведении пациента в архив все его предстоящие приёмы будут отменены, а документы удалены из системы</span>
+                                         <br />
+                                         <span id="delete-confirm-modal__question">Вы действительно хотите перевести данного пациента в архив?</span>`;
+                    let deletePatientBtn = document.getElementById('delete-patient');
+                    document.getElementById('restore-patient').style.display = 'none';
+                    deletePatientBtn.style.display = 'block';
+                    deletePatientBtn.dataset.patientId = patientId;
+                }
+                else {
+                    question.textContent = 'Вы действительно хотите вернуть данного пациента в работу?';
+                    let restorePatientBtn = document.getElementById('restore-patient');
+                    document.getElementById('delete-patient').style.display = 'none';
+                    restorePatientBtn.style.display = 'block';
+                    restorePatientBtn.dataset.patientId = patientId;
+                }
+
+                deleteConfirmModal.show();
+            }
+        })
+    }
+
+    function AddPatient() {
+        addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
+            keyboard: false
+        });
+
+        document.getElementById('save-patient').style.display = 'block';
+        document.getElementById('add-patient-modal-label').textContent = 'Добавление информации о пациенте';
+        //document.getElementById('appointment-form').style.display = 'block';
+        $.ajax({
+            url: `@Url.Action("AddPatient")`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert").empty();
+            },
+            success: function (result) {
+                $("#partial-insert").html(result);
+                let modal = document.getElementById('add-edit-modal');
+                let fullNameInput = document.getElementById('full-name');
+
+                modal.addEventListener('shown.bs.modal', function () {
+                    fullNameInput.focus()
+                })
+
+                addEditModal.show();
+
+                let checkboxes = Array.from(document.getElementsByClassName('form-check-inline'));
+                checkboxes.forEach((chk) => {
+                    chk.onchange = function () {
+                        if (chk.checked) {
+                            chk.value = true;
+                        }
+                        else {
+                            chk.value = false;
+                        }
+                    }
+                });
+
+                $('#doctor-select').select2({
+                    theme: "bootstrap-5",
+                    placeholder: 'Выберите врача',
+                    dropdownParent: $('#add-edit-modal')
+                });
+
+                $('#service-select').select2({
+                    theme: "bootstrap-5",
+                    placeholder: 'Выберите услугу',
+                    dropdownParent: $('#add-edit-modal')
+                });
+
+            }
+        });
+    };
+
+    function ViewPatient(patientId) {
+        viewModal = new bootstrap.Modal(document.getElementById('view-modal'), {
+            keyboard: false
+        });
+
+        $.ajax({
+            url: `@Url.Action("ViewPatient")?id=${patientId}`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert-view").empty();
+            },
+            success: function (result) {
+                $("#partial-insert-view").html(result);
+                viewModal.show();
+
+                let addDocButton = document.getElementById('add-document');
+                addDocButton.onclick = function () {
+                    let patientId = document.getElementById('patient-id').value;
+                    let docWin = window.open(`@Url.Action("Index", "Document")`, '_blank');
+                    docWin.onload = function () {
+                        docWin.AddDocument(patientId);
+                    };
+
+                    docWin.onbeforeunload = function () {
+                        viewModal.toggle();
+                        ViewPatient(patientId);
+                        ohSnap("Документ успешно сохранён", { 'color': 'green', 'duration': '3000' });
+                    }
+                }
+
+                let addAppButton = document.getElementById('add-appointment');
+                addAppButton.onclick = function () {
+                    let patientId = document.getElementById('patient-id').value;
+                    let appWin = window.open(`@Url.Action("Index", "Appointment")`, '_blank');
+                    appWin.onload = function () {
+                        appWin.AddAppointment('', patientId);
+                    };
+                }
+
+                let documentTds = document.querySelectorAll('.doc-tr td:nth-child(-n + 3)');
+                Array.from(documentTds).forEach((td) => {
+                    td.onclick = function () {
+                        let docId = td.closest("tr").dataset.docId;
+
+                        $.ajax({
+                            url: `@Url.Action("ViewDocument", "Document")?docId=${docId}`,
+                            type: 'POST',
+                            contentType: false,
+                            processData: false,
+                            dataType: "binary",
+                            cache: false,
+                            xhr: function () {
+                                let xhr = new XMLHttpRequest();
+                                xhr.responseType= 'blob'
+                                return xhr;
+                            },
+                            success: function (output, status, xhr) {
+                                let outputType = output.type;
+                                let blob = new Blob([output], { type: outputType });
+                                window.open(window.URL.createObjectURL(blob));
+                            }
+                        });
+                    }
+                })
+            }
+        });
+    };
+
+    function EditPatient(patientId) {
+        addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
+            keyboard: false
+        });
+
+        document.getElementById('save-patient').style.display = 'block';
+        document.getElementById('add-patient-modal-label').textContent = 'Редактирование информации о пациенте';
+        $.ajax({
+            url: `@Url.Action("EditPatient")?id=${patientId}`,
+            method: 'GET',
+            beforeSend: function () {
+                $("#partial-insert").empty();
+            },
+            success: function (result) {
+                $("#partial-insert").html(result);
+
+                addEditModal.show();
+
+                let checkboxes = Array.from(document.getElementsByClassName('form-check-inline'));
+                checkboxes.forEach((chk) => {
+                    chk.onchange = function () {
+                        if (chk.checked) {
+                            chk.value = true;
+                        }
+                        else {
+                            chk.value = false;
+                        }
+                    }
+                })
+            }
+        });
+    };
+
+    function SavePatient() {
+        let patientForm = $('#patient-form').serialize();
+        debugger
+        let appointmentForm = $('#appointment-form').serialize();
+
+        $.ajax({
+            url: `@Url.Action("SavePatient")`,
+            data: patientForm + "&" + appointmentForm,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    debugger
+                    addEditModal.toggle();
+                    LoadPatientList();
+                    ohSnap("Изменения успешно сохранены", { 'color': 'green', 'duration': '3000' });
+                    if (result.data > 0) {
+                        ViewPatient(result.data);
+                    }
+                }
+                else {
+                    let validBlock = document.getElementById('add-edit-validation');
+                    validBlock.querySelector('ul').innerHTML = '';
+                    (result.data).forEach(function (item) {
+                        validBlock.querySelector('ul').innerHTML += '<li>' + item + '</li>';
+                    })
+
+                    $('#add-edit-modal').animate({ scrollTop: 0 }, 'slow');
+                }
+            }
+        });
+    };
+
+    document.getElementById('delete-patient').onclick = function () {
+        let patientId = this.dataset.patientId;
+        $.ajax({
+            url: `@Url.Action("DeletePatient")?patientId=${patientId}`,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    deleteConfirmModal.toggle();
+                    LoadPatientList();
+                    ohSnap("Пациент переведён в архив", { 'color': 'green', 'duration': '3000' });
+                }
+            }
+        });
+    }
+
+    document.getElementById('restore-patient').onclick = function () {
+        let patientId = this.dataset.patientId;
+        $.ajax({
+            url: `@Url.Action("RestorePatient")?patientId=${patientId}`,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    deleteConfirmModal.toggle();
+                    LoadPatientList();
+                    ohSnap("Пациент был возвращён в работу", { 'color': 'green', 'duration': '3000' });
+                }
+            }
+        });
+    }
+
+</script>
+

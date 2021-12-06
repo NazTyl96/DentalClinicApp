@@ -1,0 +1,62 @@
+﻿@using AlphaStomPlusMVC.Models.ViewModels.Appointment;
+@model CalendarViewModel
+@{ 
+    int dayIndex = 0;
+}
+
+<table class="table" id="calendar-table">
+    <thead>
+        <tr>
+            <th>Пн</th>
+            <th>Вт</th>
+            <th>Ср</th>
+            <th>Чт</th>
+            <th>Пт</th>
+            @*<th>Суббота</th>
+            <th>Воскресенье</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @for (int week = 1; dayIndex >= 0; week++)
+        {
+            <tr>
+                @for (int day = 1; day <= 5; day++)
+                {
+                    if (Model.CalendarDays[dayIndex].DayOfWeek == day)
+                    {
+                        CalendarViewModel.CalendarDay curDay = Model.CalendarDays[dayIndex];
+                        if (Model.AppointmentDates.ContainsKey(curDay.Date))
+                        {
+                            <td class="calendar-cell position-relative" data-date="@curDay.DateString" style="background-color: #d1e7ff;">
+                                @curDay.Day
+                                <span class="z-index-1 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    @Model.AppointmentDates[curDay.Date]
+                                </span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="calendar-cell" data-date="@curDay.DateString">
+                                @curDay.Day
+                            </td>
+                        }
+                        if (dayIndex < Model.LastDayIndex)
+                        {
+                            dayIndex++;
+                        }
+                        else
+                        {
+                            dayIndex = -1;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,160 @@
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\AlphaStomPlusMVC.dll.config
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\AlphaStomPlusMVC.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\AlphaStomPlusMVC.pdb
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\csc.exe
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\csc.exe.config
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\csc.rsp
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\csi.exe
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\csi.exe.config
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\csi.rsp
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\System.Buffers.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\System.Memory.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\System.Numerics.Vectors.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\vbc.exe
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\vbc.exe.config
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\vbc.rsp
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\VBCSCompiler.exe
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Antlr3.Runtime.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\EntityFramework.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\EntityFramework.SqlServer.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Newtonsoft.Json.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.Helpers.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.Mvc.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.Optimization.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.Razor.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.WebPages.Deployment.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.WebPages.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.WebPages.Razor.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\WebGrease.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\EntityFramework.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\EntityFramework.SqlServer.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Newtonsoft.Json.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.Helpers.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.Mvc.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.Optimization.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.Razor.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.WebPages.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.WebPages.Deployment.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\System.Web.WebPages.Razor.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Antlr3.Runtime.pdb
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\ru\EntityFramework.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\ru\System.Web.Helpers.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\ru\System.Web.Mvc.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\ru\System.Web.Optimization.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\ru\System.Web.Razor.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\ru\System.Web.WebPages.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\obj\Debug\AlphaStomPlusMVC.csproj.CoreCompileInputs.cache
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\obj\Debug\AlphaStomPlusMVC.csproj.CopyComplete
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\obj\Debug\AlphaStomPlusMVC.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\obj\Debug\AlphaStomPlusMVC.pdb
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\AlphaStomPlusMVC.dll.config
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\AlphaStomPlusMVC.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\AlphaStomPlusMVC.pdb
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\csc.exe
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\csc.exe.config
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\csc.rsp
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\csi.exe
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\csi.exe.config
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\csi.rsp
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\System.Buffers.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\System.Memory.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\System.Numerics.Vectors.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\vbc.exe
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\vbc.exe.config
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\vbc.rsp
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\VBCSCompiler.exe
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Antlr3.Runtime.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\EntityFramework.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\EntityFramework.SqlServer.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Newtonsoft.Json.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Spire.Doc.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Spire.License.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Spire.Pdf.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.Helpers.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.Mvc.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.Optimization.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.Razor.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.WebPages.Deployment.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.WebPages.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.WebPages.Razor.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\WebGrease.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Microsoft.mshtml.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\EntityFramework.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\EntityFramework.SqlServer.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Newtonsoft.Json.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Spire.Doc.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Spire.License.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Spire.Pdf.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.Helpers.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.Mvc.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.Optimization.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.Razor.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.WebPages.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.WebPages.Deployment.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\System.Web.WebPages.Razor.xml
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\Antlr3.Runtime.pdb
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\ru\EntityFramework.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\ru\EntityFramework.SqlServer.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\ru\System.Web.Helpers.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\ru\System.Web.Mvc.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\ru\System.Web.Optimization.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\ru\System.Web.Razor.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\ru\System.Web.WebPages.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\bin\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\obj\Debug\AlphaStomPlusMVC.csproj.AssemblyReference.cache
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\obj\Debug\AlphaStomPlusMVC.csproj.CoreCompileInputs.cache
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\obj\Debug\AlphaStomPlusMVC.csproj.CopyComplete
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\obj\Debug\AlphaStomPlusMVC.dll
+C:\Users\User\AlphaStomPlus-ASP.NET\AlphaStomPlusMVC\obj\Debug\AlphaStomPlusMVC.pdb
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Spire.Doc.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Spire.License.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Spire.Pdf.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Microsoft.mshtml.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Spire.Doc.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Spire.License.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\Spire.Pdf.xml
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\bin\ru\EntityFramework.SqlServer.resources.dll
+C:\Users\foxho\Desktop\Альфа-Стом Плюс\AlphaStomPlus\AlphaStomPlusMVC\obj\Debug\AlphaStomPlusMVC.csproj.AssemblyReference.cache
