@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
+using System.Text.Json;
 using System.Web.Mvc;
 using AlphaStomPlusMVC.Models;
 using AlphaStomPlusMVC.Models.ViewModels.Patient;
@@ -14,6 +14,16 @@ namespace AlphaStomPlusMVC.Controllers
     public class PatientController : Controller
     {
         AlphaStomPlusEntities db = new AlphaStomPlusEntities();
+
+        //an object for deserialization of filters values from the view
+        internal class PatientSearchParams
+        {
+            public List<string> FullNames { get; set; }
+            public List<DateTime> DatesOfBirth { get; set; }
+            public List<int> Sexes { get; set; }
+            public int Status { get; set; }
+        }
+
         public ActionResult Index(int status = 1)
         {
             IndexViewModel model = new IndexViewModel();
@@ -28,52 +38,57 @@ namespace AlphaStomPlusMVC.Controllers
             model.Sexes = filtersInfo.Select(x => x.Sex).Distinct().ToList();
             model.DatesOfBirth = filtersInfo.Select(x => x.DateOfBirth).Distinct().OrderBy(x => x).ToList();
 
-            ViewBag.Title = "Пациенты";
+            ViewBag.Title = "Patients";
 
             return View(model);
         }
 
         [HttpGet]
-        public PartialViewResult LoadPatientsList(string fullNames, string datesOfBirth, string sexes, int status)
+        public PartialViewResult LoadPatientsList(string queryString)
         {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            PatientSearchParams searchParams = serializer.Deserialize<PatientSearchParams>(queryString);
+
             PatientsListViewModel model = new PatientsListViewModel();
 
-            model.PatientsList = (from pat in db.Patient
-                                  where pat.Status == status
-                                  select new { pat.Id, pat.FullName, pat.CardNumber, pat.Sex, pat.DateOfBirth, pat.Status }).Select(x => new PatientsListViewModel.PatientInfo() { Id = x.Id, CardNumber = x.CardNumber, DateOfBirth = x.DateOfBirth, FullName = x.FullName, Sex = x.Sex, Status = x.Status }).OrderBy(x => x.FullName).ToList();
+            //creating an IQueryable object to materialize later
+            var dbQuery = (from pat in db.Patient
+                           where pat.Status == searchParams.Status
+                           select new
+                           {
+                               pat.Id,
+                               pat.FullName,
+                               pat.CardNumber,
+                               pat.Sex,
+                               pat.DateOfBirth,
+                               pat.Status
+                           });
+            
 
-            if (!String.IsNullOrEmpty(fullNames))
+            if (searchParams.FullNames.Any())
             {
-                List<string> allFullNames = fullNames.Split(',').ToList();
-                model.PatientsList = model.PatientsList.Where(x => allFullNames.Contains(x.FullName)).ToList();
+                dbQuery = dbQuery.Where(x => searchParams.FullNames.Contains(x.FullName));
             }
 
-            if (!String.IsNullOrEmpty(datesOfBirth))
+            if (searchParams.DatesOfBirth.Any())
             {
-                List<DateTime> allDates = new List<DateTime>();
-                List<string> datesStrings = datesOfBirth.Split(',').ToList();
-                foreach (var str in datesStrings)
-                {
-                    List<string> dateParts = str.Split('.').ToList();
-                    allDates.Add(new DateTime(Int32.Parse(dateParts[2]), Int32.Parse(dateParts[1]), Int32.Parse(dateParts[0])));
-                }
-                model.PatientsList = model.PatientsList.Where(x => allDates.Contains(x.DateOfBirth)).ToList();
+                dbQuery = dbQuery.Where(x => searchParams.DatesOfBirth.Contains(x.DateOfBirth));
             }
 
-            if (!String.IsNullOrEmpty(sexes))
+            if (searchParams.Sexes.Any())
             {
-                List<int> allSexes = new List<int>();
-                List<string> sexesStrings = sexes.Split(',').ToList();
-                int sexInt = 0;
-                foreach (var str in sexesStrings)
-                {
-                    if (Int32.TryParse(str, out sexInt))
-                    {
-                        allSexes.Add(sexInt);
-                    }
-                }
-                model.PatientsList = model.PatientsList.Where(x => allSexes.Contains(x.Sex)).ToList();
+                dbQuery = dbQuery.Where(x => searchParams.Sexes.Contains(x.Sex));
             }
+
+            //materializing the query after having it filtrated
+            model.PatientsList = dbQuery.Select(x => new PatientsListViewModel.PatientInfo() {
+                                                                                                Id = x.Id,
+                                                                                                CardNumber = x.CardNumber,
+                                                                                                DateOfBirth = x.DateOfBirth,
+                                                                                                FullName = x.FullName,
+                                                                                                Sex = x.Sex,
+                                                                                                Status = x.Status
+                                                                                            }).OrderBy(x => x.FullName).ToList();
 
             return PartialView("PatientsListTable", model);
 
@@ -82,6 +97,7 @@ namespace AlphaStomPlusMVC.Controllers
         [HttpGet]
         public PartialViewResult ViewPatient(int id)
         {
+            //today's date for finding patient's upcoming appointments
             DateTime today = DateTime.Today.Date;
 
             ViewPatientViewModel model = new ViewPatientViewModel();
@@ -113,8 +129,6 @@ namespace AlphaStomPlusMVC.Controllers
                 app.DoctorName = appDoctors.FirstOrDefault(x => x.Id == app.DoctorId).FullName;
                 app.ServiceName = appServices.FirstOrDefault(x => x.Id == app.ServiceId).Name;
             }
-
-            //model.Documents = new List<Document>();
 
             return PartialView("ViewForm", model);
         }
@@ -152,28 +166,28 @@ namespace AlphaStomPlusMVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult SavePatient(Patient newPatient, Appointment newAppointment)
+        public JsonResult SavePatient(Patient patient, Appointment newAppointment)
         {
-            if (String.IsNullOrEmpty(newPatient.FullName))
+            if (String.IsNullOrEmpty(patient.FullName))
             {
-                ModelState.AddModelError("FullName", "Поле 'ФИО' обязательно для ввода");
+                ModelState.AddModelError("FullName", "'Full name' is required");
             }
 
-            if (newPatient.DateOfBirth.Year < 1900)
+            if (patient.DateOfBirth.Year < 1900)
             {
-                ModelState.AddModelError("DateOfBirth", "Введите действительную дату рождения в поле 'Дата рождения'");
+                ModelState.AddModelError("DateOfBirth", "Please enter an actual date of birth");
             }
 
             if (ModelState.IsValid)
             {
-                if (newPatient.Id > 0)
+                if (patient.Id > 0)
                 {
-                    Patient curPatient = db.Patient.Find(newPatient.Id);
+                    Patient curPatient = db.Patient.Find(patient.Id);
                     foreach (var property in typeof(Patient).GetProperties())
                     {
-                        if (property.GetValue(newPatient) != null)
+                        if (property.GetValue(patient) != null)
                         {
-                            property.SetValue(curPatient, property.GetValue(newPatient));
+                            property.SetValue(curPatient, property.GetValue(patient));
                         }
 
                     }
@@ -184,19 +198,17 @@ namespace AlphaStomPlusMVC.Controllers
                 }
                 else
                 {
-                    newPatient.Status = 1;
-                    db.Patient.Add(newPatient);
+                    patient.Status = 1;
+                    db.Patient.Add(patient);
                     db.SaveChanges();
 
                     newAppointment.Id = 0;
-                    //Service defaultService = db.Service.FirstOrDefault(x => x.IsDefault);
-                    //newAppointment.ServiceId = defaultService.Id;
-                    newAppointment.PatientId = newPatient.Id;
+                    newAppointment.PatientId = patient.Id;
                     var appointmentController = DependencyResolver.Current.GetService<AppointmentController>();
                     appointmentController.ControllerContext = new ControllerContext(this.Request.RequestContext, appointmentController);
                     appointmentController.SaveAppointment(newAppointment);
 
-                    return Json(new { success = true, data = newPatient.Id });
+                    return Json(new { success = true, data = patient.Id });
                 }
 
             }
@@ -255,7 +267,7 @@ namespace AlphaStomPlusMVC.Controllers
             return Json(new { success = true });
         }
 
-        #region Печатные формы документов (карточка пациента, договор, инфо согласие)
+        #region print forms (patient's card, agreement, consent)
         [HttpGet]
         public ActionResult PatientCard(int id)
         {
@@ -263,7 +275,7 @@ namespace AlphaStomPlusMVC.Controllers
 
             model.Patient = db.Patient.Find(id);
 
-            ViewBag.Title = "Карта пациента";
+            ViewBag.Title = "Patient card";
 
             return View(model);
         }

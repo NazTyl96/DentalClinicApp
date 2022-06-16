@@ -11,10 +11,10 @@
             <thead>
                 <tr>
                     <th>№</th>
-                    <th>ФИО</th>
-                    <th>Номер карты</th>
-                    <th>Дата рождения</th>
-                    <th>Пол</th>
+                    <th>Full name</th>
+                    <th>Card number</th>
+                    <th>Date of birth</th>
+                    <th>Sex</th>
                     <th data-sorter="false"></th>
                     <th data-sorter="false"></th>
                 </tr>
@@ -27,15 +27,15 @@
                     <td>@patient.FullName</td>
                     <td>@patient.CardNumber</td>
                     <td>@patient.DateOfBirth.ToShortDateString()</td>
-                    <td>@(patient.Sex == 1 ? "Мужской" : "Женский")</td>
-                    <td><button type="button" class="btn btn-sm btn-outline-primary edit-patient"><i class="bi bi-pencil-fill"></i> Редактировать</button></td>
+                    <td>@(patient.Sex == 1 ? "Male" : "Female")</td>
+                    <td><button type="button" class="btn btn-sm btn-outline-primary edit-patient"><i class="bi bi-pencil-fill"></i> Edit</button></td>
                     @if (patient.Status == 1)
                     {
-                        <td><button type="button" class="btn btn-sm btn-outline-secondary delete-restore-btn delete-patient" data-patient-id="" onclick="DeletePatient(this)"><i class="bi bi-folder-plus"></i> Перевести в архив</button></td>
+                        <td><button type="button" class="btn btn-sm btn-outline-secondary delete-restore-btn delete-patient" @*data-patient-id="" onclick="DeletePatient(this)"*@><i class="bi bi-folder-plus"></i> Move to archive</button></td>
                     }
                     else
                     {
-                        <td><button type="button" class="btn btn-sm btn-outline-secondary delete-restore-btn restore-patient"><i class="bi bi-folder-symlink"></i> Вернуть в работу</button></td>
+                        <td><button type="button" class="btn btn-sm btn-outline-secondary delete-restore-btn restore-patient"><i class="bi bi-folder-symlink"></i> Move to active</button></td>
                     }
                 </tr>
                 }
@@ -45,5 +45,5 @@
 }
 else
 {
-    <h4>Пациенты не найдены</h4>
+    <h4>Patients are not found</h4>
 }

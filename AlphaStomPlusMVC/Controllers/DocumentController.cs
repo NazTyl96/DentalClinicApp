@@ -123,7 +123,7 @@ namespace AlphaStomPlusMVC.Controllers
             return PartialView("AddEditTypeForm", model);
         }
 
-        [HttpPost]
+        [HttpGet]
         public FileResult ViewDocument(int docId)
         {
             Document model = db.Document.Find(docId);

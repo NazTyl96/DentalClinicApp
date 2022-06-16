@@ -22,7 +22,7 @@ document.querySelector('.section-list__section#service').onclick = function () {
     document.location.assign('/Service/Index')
 }
 
-function CheckForNewNotifications() {
+const checkForNewNotifications = () => {
     notificationModal = new bootstrap.Modal(document.getElementById('view-notification-modal'), {
         keyboard: false
     });

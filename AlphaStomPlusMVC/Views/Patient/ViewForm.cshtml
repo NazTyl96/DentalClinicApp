@@ -11,52 +11,52 @@
     <div class="patient-view__info-form simple-column" id="patient-info">
         <input type="text" name="Id" id="patient-id" hidden value="@Model.Patient.Id" />
 
-        <label>ФИО</label>
+        <label>Full name</label>
         <div class="simple-row">
             <span>@Model.Patient.FullName</span>
         </div>
 
         <div class="simple-row">
             <div class="simple-column simple-row__item simple-row__item_size_medium">
-                <label>Дата рождения</label>
+                <label>Date of birth</label>
                 <span>@Model.Patient.DateOfBirth.ToShortDateString()</span>
             </div>
 
             <div class="simple-column simple-row__item simple-row__item_size_small">
-                <label>Пол</label>
+                <label>Sex</label>
                 <div class="simple-row">
-                    <span>@(Model.Patient.Sex == 1 ? "Мужской" : "Женский")</span>
+                    <span>@(Model.Patient.Sex == 1 ? "Male" : "Female")</span>
                 </div>
             </div>
         </div>
 
-        <label>Номер карты</label>
+        <label>Card number</label>
         <div class="simple-row">
             <span>@Model.Patient.CardNumber</span>
         </div>
 
-        <label>Телефон</label>
+        <label>Phone</label>
         <div class="simple-row">
             <span>@Model.Patient.Phone</span>
         </div>
 
         <div class="simple-row">
-            <label>Снимок на руках: <input type="checkbox" name="HasXray" class="form-check-inline" @(Model.Patient.HasXray == true ? "checked" : "") disabled /></label>
-            <label>Снимок в клинике: <input type="checkbox" name="XrayInClinic" class="form-check-inline" @(Model.Patient.XrayInClinic == true ? "checked" : "") disabled /></label>
-            <label>Страховка: <input type="checkbox" name="HasInsurance" class="form-check-inline" @(Model.Patient.HasInsurance == true ? "checked" : "") disabled /></label>
+            <label>X-ray on hands: <input type="checkbox" name="HasXray" class="form-check-inline" @(Model.Patient.HasXray == true ? "checked" : "") disabled /></label>
+            <label>X-ray in the clinic: <input type="checkbox" name="XrayInClinic" class="form-check-inline" @(Model.Patient.XrayInClinic == true ? "checked" : "") disabled /></label>
+            <label>Insurance: <input type="checkbox" name="HasInsurance" class="form-check-inline" @(Model.Patient.HasInsurance == true ? "checked" : "") disabled /></label>
         </div>
     </div>
 
     <div class="patient-view__action-buttons simple-column" id="patient-buttons">
-        <button type="button" class="btn btn-primary action-buttons__button" id="print-patient-card"><i class="bi bi-printer-fill"></i> Печать карты пациента</button>
-        <button type="button" class="btn btn-primary action-buttons__button" id="print-contract"><i class="bi bi-printer-fill"></i> Печать договора</button>
-        <button type="button" class="btn btn-primary action-buttons__button" id="print-consent"><i class="bi bi-printer-fill"></i> Печать информированного согласия</button>
-        <button type="button" class="btn btn-primary action-buttons__button" id="add-document"><i class="bi bi-file-earmark-plus"></i> Добавить документ</button>
-        <button type="button" class="btn btn-primary action-buttons__button" id="add-appointment"><i class="bi bi-calendar2-plus-fill"></i> Добавить запись на прием</button>
+        <button type="button" class="btn btn-primary action-buttons__button" id="print-patient-card"><i class="bi bi-printer-fill"></i> Print patient's card</button>
+        <button type="button" class="btn btn-primary action-buttons__button" id="print-contract"><i class="bi bi-printer-fill"></i> Print a contract</button>
+        <button type="button" class="btn btn-primary action-buttons__button" id="print-consent"><i class="bi bi-printer-fill"></i> Print a consent agreement</button>
+        <button type="button" class="btn btn-primary action-buttons__button" id="add-document"><i class="bi bi-file-earmark-plus"></i> Add a document</button>
+        <button type="button" class="btn btn-primary action-buttons__button" id="add-appointment"><i class="bi bi-calendar2-plus-fill"></i> Add an appointment</button>
     </div>
 
     <div class="patient-view__documents" id="patient-docs">
-        <h5>Документы пациента</h5>
+        <h5>Patient's documents</h5>
         @if (Model.Documents.Any())
         {
             <div class="table-container" id="documents-table-container">
@@ -64,8 +64,8 @@
                     <thead>
                         <tr>
                             <th>№</th>
-                            <th>Наименование</th>
-                            <th>Тип документа</th>
+                            <th>Name</th>
+                            <th>Type</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,12 +83,12 @@
         }
         else
         {
-            <span>Документы не найдены</span>
+            <span>No documents found</span>
         }
     </div>
 
     <div class="patient-view__appointments" id="patient-appointments">
-        <h5>Предстоящие приёмы</h5>
+        <h5>Upcoming appointments</h5>
         @if (Model.Appointments.Any())
         {
             <div class="table-container" id="appointments-table-container">
@@ -96,9 +96,9 @@
                     <thead>
                         <tr>
                             <th>№</th>
-                            <th>Дата и время</th>
-                            <th>Врач</th>
-                            <th>Услуга</th>
+                            <th>Date and time</th>
+                            <th>Doctor</th>
+                            <th>Service</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -117,23 +117,7 @@
         }
         else
         {
-            <span>Предстоящих приёмов нет</span>
+            <span>No upcoming appointments</span>
         }
     </div>
 </div>
-
-<script>
-    $('#print-patient-card').click(function () {
-        window.open('@Url.Action("PatientCard", new { id = Model.Patient.Id })');
-    })
-
-    $('#print-contract').click( function ()
-    {
-        window.open('@Url.Action("PatientDogovorWord", new { id = Model.Patient.Id })');
-    });
-
-    $('#print-consent').click( function ()
-    {
-        window.open('@Url.Action("PatientConsentWord", new { id = Model.Patient.Id })');
-    });
-</script>

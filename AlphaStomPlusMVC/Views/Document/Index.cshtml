@@ -161,7 +161,7 @@
     let deleteConfirmModal;
 
     $(function () {
-        CheckForNewNotifications();
+        checkForNewNotifications();
 
         $('#doc-filter').select2({
             theme: "bootstrap-5",
@@ -485,8 +485,8 @@
                             let parentWin = window.opener;
 
                             if (parentWin) {
-                                if (typeof parentWin.ToggleViewModal == "function") {
-                                    parentWin.ToggleViewModal();
+                                if (typeof parentWin.toggleViewModal == "function") {
+                                    parentWin.toggleViewModal();
                                 }
                                 if (typeof parentWin.ViewPatient == "function") {
                                     parentWin.ViewPatient(document.getElementById('patient-select').value);

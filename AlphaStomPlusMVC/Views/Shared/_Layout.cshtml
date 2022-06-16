@@ -4,14 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Альфа-Стом Плюс</title>
+    <title>@ViewBag.Title - Dental Clinic</title>
     @Styles.Render("~/Content/css")
     <link href="~/Content/ohsnap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-icons-1.7.0/bootstrap-icons.css" rel="stylesheet" />
     <link href="~/Content/css/select2.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/css/select2-bootstrap-5-theme.min.css">
-    <link href="~/Content/css/alpha-stom-styles.css" rel="stylesheet" />
+    <link href="~/Content/css/clinic-common-styles.css" rel="stylesheet" />
     <link href="~/Scripts/tablesorter_v2.31.3/css/theme.default.min.css" rel="stylesheet" />
 
     @Scripts.Render("~/bundles/modernizr")
@@ -26,25 +26,25 @@
 <body>
     <div id="main-grid-container">
         <div class="section-list">
-            <div class="section-list__title">Информационная система стоматологической клиники</div>
-            <div class="section-list__section" id="home"><i class="bi bi-house-fill"></i> Главная</div>
-            <div class="section-list__section" id="patient"><i class="bi bi-person-lines-fill"></i> Пациенты</div>
-            <div class="section-list__section" id="document"><i class="bi bi-file-earmark-fill"></i> Документы</div>
-            <div class="section-list__section" id="calendar"><i class="bi bi-calendar3"></i> Календарь записей</div>
-            <div class="section-list__section" id="doctor"><i class="bi bi-journal-medical"></i> Врачи</div>
-            <div class="section-list__section" id="service"><i class="bi bi-clipboard-check"></i> Услуги</div>
+            <div class="section-list__title">Dental Clinic Information System</div>
+            <div class="section-list__section" id="home"><i class="bi bi-house-fill"></i> Home</div>
+            <div class="section-list__section" id="patient"><i class="bi bi-person-lines-fill"></i> Patients</div>
+            <div class="section-list__section" id="document"><i class="bi bi-file-earmark-fill"></i> Documents</div>
+            <div class="section-list__section" id="calendar"><i class="bi bi-calendar3"></i> Appointments</div>
+            <div class="section-list__section" id="doctor"><i class="bi bi-journal-medical"></i> Doctors</div>
+            <div class="section-list__section" id="service"><i class="bi bi-clipboard-check"></i> Services</div>
         </div>
 
         <div class="modal fade" id="view-notification-modal" tabindex="-1" aria-labelledby="view-modal-label" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="view-notification-modal-label">Уведомления</h5>
+                        <h5 class="modal-title" id="view-notification-modal-label">Notifications</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="partial-notification-insert-view"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
