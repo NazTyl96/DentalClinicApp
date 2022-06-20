@@ -1767,8 +1767,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\Appointment\appointment.css" />
     <Content Include="Content\css\clinic-common-styles.css" />
-    <Content Include="Content\css\Patient\patient-index.css" />
+    <Content Include="Content\css\Patient\patient.css" />
     <Content Include="Content\css\select2-bootstrap-5-theme.css" />
     <Content Include="Content\css\select2-bootstrap-5-theme.min.css" />
     <Content Include="Content\css\select2-bootstrap-5-theme.rtl.css" />
@@ -1789,6 +1790,7 @@
       <DependentUpon>AlphaStomPlusDB.edmx</DependentUpon>
       <LastGenOutput>AlphaStomPlusDB.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\Appointment\appointment.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />

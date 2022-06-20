@@ -10,7 +10,7 @@
     <input type="text" id="app-date" hidden value="@Model.DateString" />
 
     <div class="appointment-view__action-buttons simple-row" id="appointment-buttons">
-        <button type="button" class="btn btn-primary action-buttons__button" id="add-appointment" data-bs-target="#add-edit-modal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-calendar2-plus-fill"></i> Добавить запись на прием</button>
+        <button type="button" class="btn btn-primary action-buttons__button" id="add-appointment" data-bs-target="#add-edit-modal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-calendar2-plus-fill"></i> Add an appointment</button>
     </div>
 
     <div class="appointment-view__appointments" id="appointments-table">
@@ -21,12 +21,12 @@
                     <thead>
                         <tr>
                             <th>№</th>
-                            <th>Пациент</th>
-                            <th>Врач</th>
-                            <th>Время</th>
-                            <th>Услуга</th>
-                            <th>Стоимость</th>
-                            <th>Комментарий</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Time</th>
+                            <th>Service</th>
+                            <th>Price</th>
+                            <th>Comment</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -42,8 +42,8 @@
                                 <td>@app.ServiceName</td>
                                 <td>@(app.ServiceCost.ToString() ?? "")</td>
                                 <td>@app.Comment</td>
-                                <td><button type="button" class="btn btn-sm btn-outline-primary edit-app" data-bs-target="#add-edit-modal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-pencil-fill"></i> Редактировать</button></td>
-                                <td><button type="button" class="btn btn-sm btn-outline-danger delete-btn delete-app" data-bs-target="#delete-confirm-modal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-trash-fill"></i> Отменить</button></td>
+                                <td><button type="button" class="btn btn-sm btn-outline-primary edit-app" data-bs-target="#add-edit-modal" data-bs-toggle="modal" data-bs-dismiss="modal" onclick="editAppointment(event)"><i class="bi bi-pencil-fill"></i> Edit</button></td>
+                                <td><button type="button" class="btn btn-sm btn-outline-danger delete-btn delete-app" data-bs-target="#delete-confirm-modal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-trash-fill"></i> Cancel</button></td>
                             </tr>
                         }
                     </tbody>
@@ -52,7 +52,7 @@
         }
         else
         {
-            <span>Записи на приём не найдены</span>
+            <span>No appointments found</span>
         }
     </div>
 </div>

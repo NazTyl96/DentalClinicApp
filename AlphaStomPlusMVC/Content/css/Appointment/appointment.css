@@ -1,0 +1,48 @@
+﻿sup {
+    color: red;
+}
+
+#calendar-table {
+    border-collapse: separate;
+}
+
+    #calendar-table thead {
+        border: 1px solid #728cfc;
+    }
+
+.calendar-cell {
+    border: 1px solid lightgray;
+}
+
+    .calendar-cell:hover {
+        cursor: pointer;
+        background-color: lightgray;
+    }
+
+#apply-filters,
+#clear-filters {
+    align-self: flex-end;
+    margin-top: 10px;
+}
+
+#appointments-table-container {
+    max-height: 60vh;
+}
+
+#buttons {
+    margin: 20px 0px;
+}
+
+#appointment-block {
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+}
+
+#appointments-table {
+    margin-top: 10px;
+}
+
+#comment-input {
+    max-width: none;
+    max-height: 30vh;
+}

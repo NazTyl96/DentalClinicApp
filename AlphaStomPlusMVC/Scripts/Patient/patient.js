@@ -29,8 +29,10 @@ const clearFilters = () => {
 
     $('#fullname-filter').val('');
     $('#fullname-filter').trigger('change');
+
     $('#birthdate-filter').val('');
     $('#birthdate-filter').trigger('change');
+
     $('#sex-filter').val('');
     $('#sex-filter').trigger('change');
 
@@ -38,7 +40,7 @@ const clearFilters = () => {
 }
 
 //function to call from a child window(browser tab)
-const toggleViewModal = () => {
+function toggleViewModal() {
     viewModal.toggle();
 };
 
@@ -106,11 +108,11 @@ const addPatient = () => {
 
     fetch(`/Patient/AddPatient`)
     .then(response => response.text())
-    .then(html => {
-        container.innerHTML = html;
+    .then(html => container.innerHTML = html)
+    .then(() => {
+        addScripts();
+        addEditModal.show();
     })
-    .then(() => addEditModal.show())
-    .then(() => addScripts())
     .catch(error => console.error(error));
 };
 
@@ -170,7 +172,8 @@ const viewScripts = () => {
     }
 }
 
-const viewPatient = (patientId) => {
+//declared as a function to be accessible from another browser tab
+function viewPatient(patientId) {
     viewModal = new bootstrap.Modal(document.getElementById('view-modal'), {
         keyboard: false
     });
@@ -181,11 +184,11 @@ const viewPatient = (patientId) => {
 
     fetch(`/Patient/ViewPatient?id=${patientId}`)
     .then(response => response.text())
-    .then(html => {
-        container.innerHTML = html;
+    .then(html => container.innerHTML = html)
+    .then(() => {
+        viewScripts();
+        viewModal.show();
     })
-    .then(() => viewModal.show())
-    .then(() => viewScripts())
     .catch(error => console.error(error));
 };
 
@@ -257,9 +260,7 @@ const loadPatientList = () => {
 
     fetch(`/Patient/LoadPatientsList?queryString=${JSON.stringify(searchParams)}`)
     .then(response => response.text())
-    .then(html => {
-        container.innerHTML = html;
-    })
+    .then(html => container.innerHTML = html)
     .then(() => afterLoadScripts())
     .catch(error => console.error(error));
 };
@@ -276,25 +277,24 @@ const editPatient = (patientId) => {
     document.getElementById('add-patient-modal-label').textContent = 'Editing information about a patient';
 
     fetch(`/Patient/EditPatient?id=${patientId}`)
-        .then(response => response.text())
-        .then(html => {
-            container.innerHTML = html;
-        })
-        .then(() => addEditModal.show())
-        .then(() => {
-            const checkboxes = Array.from(document.getElementsByClassName('form-check-inline'));
-            checkboxes.forEach((chk) => {
-                chk.onchange = () => {
-                    if (chk.checked) {
-                        chk.value = true;
-                    }
-                    else {
-                        chk.value = false;
-                    }
+    .then(response => response.text())
+    .then(html => container.innerHTML = html)
+    .then(() => {
+        const checkboxes = Array.from(document.getElementsByClassName('form-check-inline'));
+        checkboxes.forEach((chk) => {
+            chk.onchange = () => {
+                if (chk.checked) {
+                    chk.value = true;
                 }
-            })
+                else {
+                    chk.value = false;
+                }
+            }
         })
-        .catch(error => console.error(error));
+
+        addEditModal.show();
+    })
+    .catch(error => console.error(error));
 };
 
 const savePatient = () => {

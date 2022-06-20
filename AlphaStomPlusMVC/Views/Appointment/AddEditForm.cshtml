@@ -8,10 +8,10 @@
     <div class="simple-column">
         <input type="text" name="Id" id="app-id" hidden value="@Model.Appointment.Id" />
 
-        <label>Дата<sup>*</sup></label>
+        <label>Date<sup>*</sup></label>
         <input type="datetime-local" class="form-control simple-column__item simple-column__item_size_large" id="date-input" name="Date" value="@(Model.Appointment.Id > 0 ? Model.Appointment.Date.ToString("yyyy-MM-dd") + "T" + Model.Appointment.Date.ToShortTimeString() : Model.Appointment.Date.ToString("yyyy-MM-dd") + "T12:00")" />
 
-        <label>Пациент<sup>*</sup></label>
+        <label>Patient<sup>*</sup></label>
         <select class="form-select simple-column__item simple-column__item_size_large" id="patient-select" name="PatientId">
             <option></option>
             @foreach (var item in Model.PatientSelect)
@@ -20,7 +20,7 @@
             }
         </select>
 
-        <label>Врач<sup>*</sup></label>
+        <label>Doctor<sup>*</sup></label>
         <select class="form-select simple-column__item simple-column__item_size_large" id="doctor-select" name="DoctorId">
             <option></option>
             @foreach (var item in Model.DoctorSelect)
@@ -29,7 +29,7 @@
             }
         </select>
 
-        <label>Услуга</label>
+        <label>Service</label>
         <select class="form-select simple-column__item simple-column__item_size_large" id="service-select" name="ServiceId">
             @*<option value="0" @(Model.Appointment.ServiceId == 0 ? "selected" : "")>Не выбрана</option>*@
             @foreach (var item in Model.ServiceSelect)
@@ -45,7 +45,7 @@
             }
         </select>
 
-        <label>Комментарий</label>
+        <label>Comment</label>
         <textarea class="form-control" id="comment-input" name="Comment">@Model.Appointment.Comment</textarea>
 
     </div>

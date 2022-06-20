@@ -1,73 +1,24 @@
 ﻿@using AlphaStomPlusMVC.Models.ViewModels.Appointment;
 @model IndexViewModel
 
-<style>
-    sup {
-        color: red;
-    }
+<link href="~/Content/css/Appointment/appointment.css" rel="stylesheet" />
 
-    #calendar-table {
-        border-collapse: separate;
-    }
-
-    #calendar-table thead {
-        border: 1px solid #728cfc;
-    }
-
-    .calendar-cell {
-        border: 1px solid lightgray;
-    }
-
-    .calendar-cell:hover {
-        cursor: pointer;
-        background-color: lightgray;
-    }
-
-    #apply-filters,
-    #clear-filters {
-        align-self: flex-end;
-        margin-top: 10px;
-    }
-
-    #appointments-table-container {
-        max-height: 60vh;
-    }
-
-    #buttons {
-        margin: 20px 0px;
-    }
-
-    #appointment-block {
-        flex-wrap: nowrap;
-        margin-bottom: 10px;
-    }
-
-    #appointments-table {
-        margin-top: 10px;
-    }
-
-    #comment-input {
-        max-width: none;
-        max-height: 30vh;
-    }
-</style>
-
-<h2>Календарь записей пациентов на приём</h2>
+<h2>Patients appointment calendar</h2>
 
 <div class="simple-row" id="buttons">
     @if (Model.Status == 1)
     {
-        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="ChangeStatus()"><i class="bi bi-folder-fill"></i> Перейти в архив</button>
+        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="changeStatus()"><i class="bi bi-folder-fill"></i> To archive</button>
     }
     else
     {
-        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="ChangeStatus()"><i class="bi bi-person-rolodex"></i> Перейти к записям в работе</button>
+        <button type="button" class="btn btn-secondary simple-row__item" id="change-status" onclick="changeStatus()"><i class="bi bi-person-rolodex"></i> To active appointments</button>
     }
 </div>
 
 <div class="filter-row">
     <div class="filter-row__column-unit filter-row__column-unit_size_large">
-        <label>Пациент</label>
+        <label>Patient</label>
         <select id="patient-filter" multiple>
             @foreach (var item in Model.PatientFilter)
             {
@@ -77,7 +28,7 @@
     </div>
 
     <div class="filter-row__column-unit filter-row__column-unit_size_large">
-        <label>Врач</label>
+        <label>Doctor</label>
         <select id="doctor-filter" multiple>
             @foreach (var item in Model.DoctorFilter)
             {
@@ -87,7 +38,7 @@
     </div>
 
     <div class="filter-row__column-unit filter-row__column-unit_size_medium">
-        <label>Услуга</label>
+        <label>Service</label>
         <select id="service-filter" multiple>
             @foreach (var item in Model.ServiceFilter)
             {
@@ -97,41 +48,42 @@
     </div>
 
     <div class="filter-row__column-unit filter-row__column-unit_size_medium">
-        <label>Месяц</label>
-        <input type="month" class="form-control" id="month-filter" value="@Model.CurrentDate.ToString("yyyy-MM")"/>
+        <label>Month</label>
+        <input type="month" class="form-control" id="month-filter" value="@Model.CurrentDate.ToString("yyyy-MM")" />
     </div>
 
     <div class="simple-row">
-        <button type="button" class="btn btn-primary simple-row__item" id="apply-filters" onclick="LoadCalendar()"><i class="bi bi-funnel-fill"></i> Применить фильтры</button>
-        <button type="button" class="btn btn-secondary simple-row__item" id="clear-filters" onclick="ClearFilters()"><i class="bi bi-funnel"></i> Очистить фильтры</button>
+        <button type="button" class="btn btn-primary simple-row__item" id="apply-filters" onclick="loadCalendar()"><i class="bi bi-funnel-fill"></i> Apply</button>
+        <button type="button" class="btn btn-secondary simple-row__item" id="clear-filters" onclick="clearFilters()"><i class="bi bi-funnel"></i> Clear</button>
     </div>
 </div>
 
 <div id="calendar-div"></div>
 
-@*модальное окно подтверждения*@
+@*confirmation modal*@
 <div class="modal" id="delete-confirm-modal" tabindex="-1" aria-labelledby="delete-app-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="delete-app-label">Подтвердите действие</h5>
+                <h5 class="modal-title" id="delete-app-label">Confirm action</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <span id="delete-confirm-modal__warning">Отмененённые приёмы невозможно вернуть в работу</span>
+                <input type="hidden" id="confirm-modal-appointment-id" />
+                <span id="delete-confirm-modal__warning">Canceled appointments cannot be returned</span>
                 <br />
-                <span id="delete-confirm-modal__question">Вы действительно хотите отменить приём?</span>
+                <span id="delete-confirm-modal__question">Are you sure you want to cancel the appointment?</span>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success delete-confirm" id="confirm-delete-app" data-app-id="" data-date="" @*data-bs-target="#view-modal" data-bs-toggle="modal"*@ data-bs-dismiss="modal">Да</button>
-                <button type="button" class="btn btn-danger" data-bs-target="#view-modal" data-bs-toggle="modal" data-bs-dismiss="modal">Нет</button>
+                <button type="button" class="btn btn-success delete-confirm" id="confirm-delete-app" data-bs-dismiss="modal" onclick="deleteAppointment()">Yes</button>
+                <button type="button" class="btn btn-danger" data-bs-target="#view-modal" data-bs-toggle="modal" data-bs-dismiss="modal">No</button>
             </div>
         </div>
     </div>
 </div>
-@*конец модального*@
+@*end of confirmation modal*@
 
-@*модальноe окно добавления/редактирования записи*@
+@*modal for adding/editing a patient*@
 <div class="modal" id="add-edit-modal" tabindex="-1" aria-labelledby="add-app-modal-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -141,15 +93,15 @@
             </div>
             <div class="modal-body" id="partial-insert"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-target="#view-modal" data-bs-toggle="modal" data-bs-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-success" id="save-app" @*data-bs-target="#view-modal" data-bs-toggle="modal" data-bs-dismiss="modal"*@ onclick="SaveAppointment()">Сохранить</button>
+                <button type="button" class="btn btn-secondary" data-bs-target="#view-modal" data-bs-toggle="modal" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="save-app"  onclick="saveAppointment()">Save</button>
             </div>
         </div>
     </div>
 </div>
-@*конец модального*@
+@*end of modal*@
 
-@*модальноe окно просмотра записей на дату*@
+@*appointment by date view modal*@
 <div class="modal fade" id="view-modal" tabindex="-1" aria-labelledby="view-modal-label" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -159,301 +111,12 @@
             </div>
             <div class="modal-body doctor-view" id="partial-insert-view"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
-@*конец модального*@
+@*end of modal*@
 
-<script>
-    document.querySelector('.section-list__section#calendar').classList.add('section-list__section_active');
-
-    let addEditModal;
-    let viewModal;
-    let deleteConfirmModal;
-
-    $(function () {
-        checkForNewNotifications();
-
-        $('#patient-filter').select2({
-            theme: "bootstrap-5",
-            placeholder: 'Выберите пациента'
-        });
-
-        $('#doctor-filter').select2({
-            theme: "bootstrap-5",
-            placeholder: 'Выберите врача'
-        });
-
-        $('#service-filter').select2({
-            theme: "bootstrap-5",
-            placeholder: 'Выберите услугу'
-        });
-
-        document.getElementById('clear-filters').onclick = function () {
-
-            $('#patient-filter').val('');
-            $('#patient-filter').trigger('change');
-
-            $('#doctor-filter').val('');
-            $('#doctor-filter').trigger('change');
-
-            $('#service-filter').val('');
-            $('#service-filter').trigger('change');
-
-            LoadCalendar();
-        }
-
-        LoadCalendar();
-    });
-
-    function ChangeStatus() {
-
-        let curStatus = '@Model.Status';
-
-        let newStatus;
-        if (curStatus === '1') {
-            newStatus = '0';
-        }
-        else {
-            newStatus = '1';
-        }
-
-        document.location.assign(`@Url.Action("Index")?status=${newStatus}`)
-    }
-
-    function LoadCalendar() {
-        let patientFilter = $('#patient-filter').val() || '';
-        let doctorFilter = $('#doctor-filter').val() || '';
-        let serviceFilter = $('#service-filter').val() || '';
-        let month = document.getElementById('month-filter').value;
-
-        $.ajax({
-            url: `@Url.Action("LoadCalendar")?patientNames=${patientFilter}&doctorIds=${doctorFilter}&serviceFilter=${serviceFilter}
-                  &month=${month}&status=@Model.Status`,
-            method: 'GET',
-            beforeSend: function () {
-                $("#calendar-div").empty().html("<h4>Загрузка данных...</h4>");
-            },
-            success: function (result) {
-                $("#calendar-div").html(result);
-                AfterLoadCalendar();
-            }
-        });
-    };
-
-    function ViewAppointmentsByDate(date) {
-        viewModal = new bootstrap.Modal(document.getElementById('view-modal'), {
-            keyboard: false
-        });
-
-        let patientFilter = $('#patient-filter').val() || '';
-        let doctorFilter = $('#doctor-filter').val() || '';
-        let serviceFilter = $('#service-filter').val() || '';
-
-        $.ajax({
-            url: `@Url.Action("ViewAppointmentsByDate")?date=${date}&patientNames=${patientFilter}&doctorIds=${doctorFilter}&serviceFilter=${serviceFilter}`,
-            method: 'GET',
-            beforeSend: function () {
-                $("#partial-insert-view").empty().html("<h4>Загрузка данных...</h4>");
-            },
-            success: function (result) {
-                $("#partial-insert-view").html(result);
-                let dateParts = date.split('-');
-                document.getElementById('view-modal-label').textContent = 'Просмотр записей на ' + dateParts[2] + '.' + dateParts[1] + '.' + dateParts[0];
-                viewModal.show();
-
-                document.getElementById('add-appointment').onclick = function () {
-                    let date = document.getElementById('app-date').value;
-                    AddAppointment(date);
-                }
-
-                let deleteButtons = Array.from(document.getElementsByClassName('delete-app'));
-                deleteButtons.forEach((btn) => {
-                    btn.onclick = function () {
-                        deleteConfirmModal = new bootstrap.Modal(document.getElementById('delete-confirm-modal'), {
-                            keyboard: false
-                        });
-
-                        let appId = btn.closest('tr').dataset.appointmentId;
-                        let deleteAppBtn = document.getElementById('confirm-delete-app');
-                        deleteAppBtn.dataset.appId = appId;
-                        deleteAppBtn.dataset.date = document.getElementById('app-date').value;
-
-                        deleteConfirmModal.show();
-                    }
-                })
-
-                let editButtons = Array.from(document.getElementsByClassName('edit-app'));
-                editButtons.forEach((btn) => {
-                    btn.onclick = function () {
-                        EditAppointment(btn.closest('tr').dataset.appointmentId);
-                    }
-                })
-
-            }
-        });
-    };
-
-    document.getElementById('confirm-delete-app').onclick = function () {
-        DeleteAppointment(this.dataset.appId, this.dataset.date);
-    }
-
-    function AfterLoadCalendar() {
-
-        let calendarTds = Array.from(document.querySelectorAll('.calendar-cell'));
-        calendarTds.forEach((td) => {
-            td.onclick = function () {
-                ViewAppointmentsByDate(td.dataset.date);
-            }
-        })
-    }
-
-    function AddAppointment(date, patientId = 0, doctorId = 0) {
-        addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
-            keyboard: false
-        });
-
-        document.getElementById('add-app-modal-label').textContent = 'Добавление записи на приём';
-        $.ajax({
-            url: `@Url.Action("AddAppointment")?date=${date}&patientId=${patientId}&doctorId=${doctorId}`,
-            method: 'GET',
-            beforeSend: function () {
-                $("#partial-insert").empty();
-                $("#partial-insert").html('<h4>Загрузка данных...</h4>')
-            },
-            success: function (result) {
-                $("#partial-insert").html(result);
-                let modal = document.getElementById('add-edit-modal');
-                let patientSelect = document.getElementById('patient-select');
-
-                modal.addEventListener('shown.bs.modal', function () {
-                    patientSelect.focus()
-                })
-
-                $('#patient-select').select2({
-                    theme: "bootstrap-5",
-                    placeholder: 'Выберите пациента',
-                    dropdownParent: $('#add-edit-modal')
-                });
-
-                $('#doctor-select').select2({
-                    theme: "bootstrap-5",
-                    placeholder: 'Выберите врача',
-                    dropdownParent: $('#add-edit-modal')
-                });
-
-                $('#service-select').select2({
-                    theme: "bootstrap-5",
-                    placeholder: 'Выберите услугу',
-                    dropdownParent: $('#add-edit-modal')
-                });
-
-                addEditModal.show();
-            }
-        });
-    };
-
-    function EditAppointment(appId) {
-        addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
-            keyboard: false
-        });
-
-        document.getElementById('add-app-modal-label').textContent = 'Редактирование информации о приёме';
-        $.ajax({
-            url: `@Url.Action("EditAppointment")?id=${appId}`,
-            method: 'GET',
-            beforeSend: function () {
-                $("#partial-insert").empty();
-                $("#partial-insert").html('<h4>Загрузка данных...</h4>')
-            },
-            success: function (result) {
-                $("#partial-insert").html(result);
-
-                $('#patient-select').select2({
-                    theme: "bootstrap-5",
-                    placeholder: 'Выберите пациента',
-                    dropdownParent: $('#add-edit-modal')
-                });
-
-                $('#doctor-select').select2({
-                    theme: "bootstrap-5",
-                    placeholder: 'Выберите врача',
-                    dropdownParent: $('#add-edit-modal')
-                });
-
-                $('#service-select').select2({
-                    theme: "bootstrap-5",
-                    placeholder: 'Выберите услугу',
-                    dropdownParent: $('#add-edit-modal')
-                });
-
-                addEditModal.show();
-            }
-        });
-    };
-
-    function SaveAppointment() {
-        let appForm = $('#app-form').serialize();
-        let date = document.getElementById('date-input').value;
-
-        $.ajax({
-            url: `@Url.Action("SaveAppointment")`,
-            data: appForm,
-            method: 'POST',
-            dataType: 'JSON',
-            success: function (result) {
-                if (result.success) {
-                    let parentWin = window.opener;
-
-                    if (parentWin) {
-                        if (typeof parentWin.toggleViewModal == "function") {
-                            parentWin.toggleViewModal();
-                        }
-                        if (typeof parentWin.ViewPatient == "function") {
-                            parentWin.ViewPatient(document.getElementById('patient-select').value);
-                        }
-                        if (typeof parentWin.ViewDoctor == "function") {
-                            parentWin.ViewDoctor(document.getElementById('doctor-select').value);
-                        }
-                        parentWin.ohSnap("Запись на приём успешно создана", { 'color': 'green', 'duration': '3000' });
-                    }
-                    addEditModal.toggle();
-                    LoadCalendar();
-                    if (viewModal){
-                        viewModal.dispose();
-                    }
-                    ViewAppointmentsByDate(date.split('T')[0]);
-                    ohSnap("Изменения успешно сохранены", { 'color': 'green', 'duration': '3000' });
-                }
-                else {
-                    let validBlock = document.getElementById('add-edit-validation');
-                    validBlock.querySelector('ul').innerHTML = '';
-                    (result.data).forEach(function (item) {
-                        validBlock.querySelector('ul').innerHTML += '<li>' + item + '</li>';
-                    })
-
-                    $('#add-edit-modal').animate({ scrollTop: 0 }, 'slow');
-                }
-            }
-        });
-    };
-
-    function DeleteAppointment(id, date) {
-        $.ajax({
-            url: `@Url.Action("DeleteAppointment")?id=${id}`,
-            method: 'POST',
-            dataType: 'JSON',
-            success: function (result) {
-                if (result.success) {
-                    ohSnap("Запись на приём отменена", { 'color': 'green', 'duration': '3000' });
-                    LoadCalendar();
-                    ViewAppointmentsByDate(date);
-                }
-            }
-        });
-    }
-
-</script>
+<script src="~/Scripts/Appointment/appointment.js"></script>
 

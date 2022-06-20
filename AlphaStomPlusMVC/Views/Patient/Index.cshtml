@@ -1,7 +1,7 @@
 ﻿@using AlphaStomPlusMVC.Models.ViewModels.Patient;
 @model IndexViewModel
 
-<link href="~/Content/css/Patient/patient-index.css" rel="stylesheet" />
+<link href="~/Content/css/Patient/patient.css" rel="stylesheet" />
 
 <h2>Patients of the clinic</h2>
 
@@ -33,7 +33,6 @@
         <select id="birthdate-filter" multiple>
             @foreach (var item in Model.DatesOfBirth)
             {
-                @*<option value="2022-01-31T13:15:05.2151663-05:00">@item.ToShortDateString()</option>*@
                 <option value="@item.ToString("yyyy-MM-dd")">@item.ToShortDateString()</option>
             }
         </select>
