@@ -18,7 +18,7 @@ namespace AlphaStomPlusMVC.Controllers
 
             model.NotificationsCount = GetNotificationsCount();
 
-            ViewBag.Title = "Главная";
+            ViewBag.Title = "Home Page";
 
             return View(model);
         }
@@ -27,9 +27,9 @@ namespace AlphaStomPlusMVC.Controllers
         public int GetNotificationsCount()
         {
             DateTime today = DateTime.Today.Date;
-            var curNotificationList = from not in db.Notification
-                                      where (not.DateOfShow <= today && !not.IsAccepted && not.Type == 2) || (not.DateOfShow == today && !not.IsAccepted && not.Type == 1)
-                                      select not;
+            var curNotificationList = (from not in db.Notification
+                                       where (not.DateOfShow <= today && !not.IsAccepted && not.Type == 2) || (not.DateOfShow == today && !not.IsAccepted && not.Type == 1)
+                                       select not).ToList();
 
             return curNotificationList.Any() ? curNotificationList.Count() : 0;
         }

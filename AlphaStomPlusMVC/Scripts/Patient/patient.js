@@ -94,7 +94,8 @@ const addScripts = () => {
     });
 }
 
-const addPatient = () => {
+//declared as a function to be accessible from another browser tab
+function addPatient() {
     addEditModal = new bootstrap.Modal(document.getElementById('add-edit-modal'), {
         keyboard: false
     });

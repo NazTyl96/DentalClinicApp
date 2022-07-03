@@ -1,0 +1,23 @@
+﻿.quick-action-list {
+    display: grid;
+    grid-gap: 20px;
+    width: 700px;
+    height: 370px;
+    grid-template-columns: repeat(3, 220px);
+    grid-template-rows: repeat(2, auto);
+    margin: 92.5px auto;
+}
+
+.quick-action-list__action {
+    background-color: lavender;
+    color: #728cfc;
+    font-size: x-large;
+    text-align: center;
+    height: 175px;
+    border-radius: 10px;
+    vertical-align: middle;
+}
+
+#view-notifications {
+    position: relative;
+}

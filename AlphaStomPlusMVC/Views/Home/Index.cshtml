@@ -1,126 +1,25 @@
 ﻿@using AlphaStomPlusMVC.Models.ViewModels.Home;
 @model IndexViewModel
 
-<style>
-    .quick-action-list {
-        display: grid;
-        grid-gap: 20px;
-        width: 700px;
-        height: 370px;
-        grid-template-columns: repeat(3, 220px);
-        grid-template-rows: repeat(2, auto);
-        margin: 92.5px auto;
-    }
+<link href="~/Content/css/Home/home.css" rel="stylesheet" />
 
-    .quick-action-list__action {
-        background-color: lavender;
-        color: #728cfc;
-        font-size: x-large;
-        text-align: center;
-        height: 175px;
-        border-radius: 10px;
-        vertical-align: middle;
-    }
-
-    #view-notifications {
-        position: relative;
-    }
-</style>
-<h2>Главная</h2>
+<h2>Home Page</h2>
 
 <div class="quick-action-list">
-    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="view-notifications">
+    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="view-notifications" onclick="viewNotifications()">
         @if (Model.NotificationsCount > 0)
         {
             <span class="z-index-1 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notifications-count">
                 @Model.NotificationsCount
             </span>
         }
-        <i class="bi bi-bell-fill"></i><br /> Уведомления
+        <i class="bi bi-bell-fill"></i><br /> Notifications
     </button>
-    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="add-patient"><i class="bi bi-person-plus-fill"></i><br /> Добавить пациента</button>
-    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="add-document"><i class="bi bi-file-earmark-plus-fill"></i><br /> Добавить документ</button>
-    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="add-appointment"><i class="bi bi-calendar2-plus-fill"></i><br /> Добавить запись на приём</button>
-    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="add-doctor"><i class="bi bi-journal-plus"></i><br /> Добавить врача</button>
-    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="add-service"><i class="bi bi-clipboard-plus"></i><br /> Добавить услугу</button>
+    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="add-patient" onclick="addPatient()"><i class="bi bi-person-plus-fill"></i><br /> Add a patient</button>
+    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="add-document" onclick="addDocument()"><i class="bi bi-file-earmark-plus-fill"></i><br /> Add a document</button>
+    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="add-appointment" onclick="addAppointment()"><i class="bi bi-calendar2-plus-fill"></i><br /> Add an appointment</button>
+    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="add-doctor" onclick="addDoctor()"><i class="bi bi-journal-plus"></i><br /> Add a doctor</button>
+    <button type="button" class="btn btn-sm btn-outline-primary quick-action-list__action" id="add-service" onclick="addService()"><i class="bi bi-clipboard-plus"></i><br /> Add a service</button>
 </div>
 
-
-<script>
-    document.querySelector('.section-list__section#home').classList.add('section-list__section_active');
-
-    $(function () {
-        checkForNewNotifications();
-    });
-
-    document.getElementById('view-notifications').onclick = function () {
-        notificationModal = new bootstrap.Modal(document.getElementById('view-notification-modal'), {
-            keyboard: false
-        });
-
-        $.ajax({
-            url: `@Url.Action("GetAllNotifications")`,
-            method: 'GET',
-            beforeSend: function () {
-                $("#partial-notification-insert-view").empty().html("<h4>Загрузка данных...</h4>");
-            },
-            success: function (result) {
-                $("#partial-notification-insert-view").html(result);
-
-                notificationModal.show();
-            }
-        });
-    }
-
-    document.getElementById('add-patient').onclick = function () {
-        let patientWin = window.open(`@Url.Action("Index", "Patient")`, '_blank');
-        patientWin.onload = function () {
-            patientWin.AddPatient();
-        };
-    }
-
-    document.getElementById('add-document').onclick = function () {
-        let docWin = window.open(`@Url.Action("Index", "Document")`, '_blank');
-        docWin.onload = function () {
-            docWin.AddDocument();
-        };
-    }
-
-    document.getElementById('add-appointment').onclick = function () {
-        let appWin = window.open(`@Url.Action("Index", "Appointment")`, '_blank');
-        appWin.onload = function () {
-            appWin.AddAppointment('');
-        };
-    }
-
-    document.getElementById('add-doctor').onclick = function () {
-        let doctorWin = window.open(`@Url.Action("Index", "Doctor")`, '_blank');
-        doctorWin.onload = function () {
-            doctorWin.AddDoctor();
-        };
-    }
-
-    document.getElementById('add-service').onclick = function () {
-        let serviceWin = window.open(`@Url.Action("Index", "Service")`, '_blank');
-        serviceWin.onload = function () {
-            serviceWin.AddService();
-        };
-    }
-
-    function GetNotificationsCount() {
-        $.ajax({
-            url: `@Url.Action("GetNotificationsCount")`,
-            method: 'GET',
-            success: function (result) {
-                if (result > 0) {
-                    $("#notifications-count").show();
-                    $("#notifications-count").text(result);
-                }
-                else {
-                    $("#notifications-count").hide();
-                }
-            }
-        });
-    }
-
-</script>
+<script src="~/Scripts/Home/home.js"></script>
